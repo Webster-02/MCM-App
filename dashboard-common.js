@@ -1,4 +1,4 @@
-// MySVL — Shared dashboard utilities (toast, modals, sidebar, user init)
+// MCM — Shared dashboard utilities
 
 function toast(title, msg = '', type = 'info') {
   const icons = { success: 'ti-circle-check', error: 'ti-alert-circle', info: 'ti-info-circle', warning: 'ti-alert-triangle' };
@@ -89,6 +89,60 @@ function initDashboardUser(user, options = {}) {
   }
 }
 
+function applyMCMBrand() {
+  document.title = document.title.replace(/MySVL|SVL/gi, 'MCM');
+
+  // Replace visible brand copy without touching user-entered data.
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    if (!node.nodeValue) return;
+    const value = node.nodeValue;
+    if (/MySVL|SVL/i.test(value)) {
+      node.nodeValue = value.replace(/MySVL/gi, 'MCM').replace(/\bSVL\b/gi, 'MCM');
+    }
+  });
+
+  // Give the existing logo text a clean MCM wordmark treatment.
+  document.querySelectorAll('.logo, .brand, .app-logo').forEach(el => {
+    el.classList.add('mcm-brand-wordmark');
+  });
+}
+
+function simplifyStudentNavigation() {
+  if (!/student-dashboard\.html/i.test(window.location.pathname)) return;
+  const items = [...document.querySelectorAll('.nav-item')];
+  items.forEach(item => {
+    const text = (item.textContent || '').trim().toLowerCase();
+    if (!text) return;
+
+    // Remove low-priority utility/game links from the primary navigation.
+    if (
+      text.includes('pomodoro') ||
+      text === 'games' ||
+      text.includes('study arcade') ||
+      text.includes('skill radar')
+    ) {
+      item.classList.add('mcm-hidden-nav');
+      return;
+    }
+
+    // Keep the useful advanced features, but present them more clearly.
+    if (text.includes('learning lab')) item.dataset.mcmLabel = 'Learning Insights';
+    if (text.includes('quest arena')) item.dataset.mcmLabel = 'Practice Arena';
+    if (text.includes('social')) item.dataset.mcmLabel = 'Community';
+    if (text.includes('discussion rooms')) item.dataset.mcmLabel = 'Study Rooms';
+  });
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const label = item.dataset.mcmLabel;
+    if (!label) return;
+    const textNode = [...item.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim());
+    if (textNode) textNode.nodeValue = ` ${label}`;
+  });
+}
+
 function setupMobileMenu() {
   if (window.innerWidth >= 900) return;
   const left = document.querySelector('.topbar-left');
@@ -121,12 +175,16 @@ Object.assign(window, {
   getGreeting,
   getInitials,
   initDashboardUser,
+  applyMCMBrand,
+  simplifyStudentNavigation,
   setupMobileMenu,
   tabSwitch,
   hidePageLoader
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  applyMCMBrand();
+  simplifyStudentNavigation();
   setupModalBackdrops();
   setupMobileMenu();
 });
