@@ -1,0 +1,161 @@
+/* MCM — Luxury Student Dashboard layer */
+
+:root {
+  --accent: #D4AF63;
+  --accent-2: #E8CC8A;
+  --accent-soft: rgba(212,175,99,.12);
+  --accent-glow: rgba(212,175,99,.22);
+  --border-focus: #D4AF63;
+  --bg: #08090C;
+  --bg-surface: #0E1014;
+  --bg-card: #12151A;
+  --bg-card-hover: #171A20;
+  --bg-input: #15181E;
+  --text-primary: #F5F3EE;
+  --text-secondary: #9B9EA7;
+  --text-muted: #5F636D;
+  --shadow-accent: 0 0 30px rgba(212,175,99,.12);
+}
+
+body { background: var(--bg); }
+
+.sidebar {
+  background: linear-gradient(180deg, #0B0D11 0%, #090A0D 100%);
+  border-right: 1px solid rgba(212,175,99,.10);
+}
+
+.sidebar-logo { padding: 18px 16px; }
+.logo-mark {
+  background: linear-gradient(135deg, #D4AF63, #A8843E) !important;
+  box-shadow: 0 8px 26px rgba(212,175,99,.16) !important;
+}
+.logo-text { font-size: 0 !important; letter-spacing: -.5px; }
+.logo-text::after { content: 'MCM'; font-size: 17px; letter-spacing: -.5px; }
+.logo-ver { font-size: 10px !important; color: #777B84 !important; }
+.logo-ver::after { content: 'Learning Platform'; font-size: 10px; }
+.logo-ver { font-size: 0 !important; }
+
+.nav-label {
+  color: #686C75 !important;
+  letter-spacing: 1.1px !important;
+  font-size: 9px !important;
+  margin: 16px 10px 6px !important;
+}
+.nav-item {
+  border-radius: 9px !important;
+  margin: 2px 8px !important;
+  padding: 9px 11px !important;
+  color: #9B9EA7 !important;
+}
+.nav-item:hover {
+  background: rgba(212,175,99,.07) !important;
+  color: #EEE8D7 !important;
+}
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(212,175,99,.14), rgba(212,175,99,.05)) !important;
+  color: #E8CC8A !important;
+  box-shadow: inset 2px 0 0 #D4AF63;
+}
+.nav-item i { color: inherit !important; }
+.nav-badge { background: rgba(212,175,99,.12) !important; color: #D4AF63 !important; }
+
+/* Simplify sidebar into a smaller information architecture. */
+#nav-learninglab::after,
+#nav-questarena::after,
+#nav-social::after,
+#nav-rooms::after,
+#nav-games::after,
+#nav-studyarcade::after,
+#nav-pomodoro::after,
+#nav-ai::after,
+#nav-tasks::after { }
+
+#nav-skillradar,
+#nav-games,
+#nav-studyarcade,
+#nav-pomodoro { display: none !important; }
+
+/* Rename selected legacy labels visually without changing their JS IDs. */
+#nav-slides { font-size: 0 !important; }
+#nav-slides i { font-size: 15px !important; }
+#nav-slides::after { content: 'Library'; font-size: 12px; }
+#nav-subjects { font-size: 0 !important; }
+#nav-subjects i { font-size: 15px !important; }
+#nav-subjects::after { content: 'Courses'; font-size: 12px; }
+#nav-quiz { font-size: 0 !important; }
+#nav-quiz i { font-size: 15px !important; }
+#nav-quiz::after { content: 'Quizzes'; font-size: 12px; }
+#nav-flashcards { font-size: 0 !important; }
+#nav-flashcards i { font-size: 15px !important; }
+#nav-flashcards::after { content: 'Flashcards'; font-size: 12px; }
+#nav-learninglab { font-size: 0 !important; }
+#nav-learninglab i { font-size: 15px !important; }
+#nav-learninglab::after { content: 'Learning Insights'; font-size: 12px; }
+#nav-questarena { font-size: 0 !important; }
+#nav-questarena i { font-size: 15px !important; }
+#nav-questarena::after { content: 'Practice Arena'; font-size: 12px; }
+#nav-ai { font-size: 0 !important; }
+#nav-ai i { font-size: 15px !important; }
+#nav-ai::after { content: 'AI Study Assistant'; font-size: 12px; }
+#nav-tasks { font-size: 0 !important; }
+#nav-tasks i { font-size: 15px !important; }
+#nav-tasks::after { content: 'Tasks'; font-size: 12px; }
+#nav-social { font-size: 0 !important; }
+#nav-social i { font-size: 15px !important; }
+#nav-social::after { content: 'Community'; font-size: 12px; }
+#nav-chat { font-size: 0 !important; }
+#nav-chat i { font-size: 15px !important; }
+#nav-chat::after { content: 'Messages'; font-size: 12px; }
+#nav-rooms { font-size: 0 !important; }
+#nav-rooms i { font-size: 15px !important; }
+#nav-rooms::after { content: 'Study Rooms'; font-size: 12px; }
+#nav-leaderboard { font-size: 0 !important; }
+#nav-leaderboard i { font-size: 15px !important; }
+#nav-leaderboard::after { content: 'Leaderboard'; font-size: 12px; }
+#nav-grades { font-size: 0 !important; }
+#nav-grades i { font-size: 15px !important; }
+#nav-grades::after { content: 'Grades'; font-size: 12px; }
+#nav-attendance { font-size: 0 !important; }
+#nav-attendance i { font-size: 15px !important; }
+#nav-attendance::after { content: 'Attendance'; font-size: 12px; }
+#nav-profile { font-size: 0 !important; }
+#nav-profile i { font-size: 15px !important; }
+#nav-profile::after { content: 'Profile'; font-size: 12px; }
+#nav-notifications { font-size: 0 !important; }
+#nav-notifications i { font-size: 15px !important; }
+#nav-notifications::after { content: 'Notifications'; font-size: 12px; }
+#nav-settings { font-size: 0 !important; }
+#nav-settings i { font-size: 15px !important; }
+#nav-settings::after { content: 'Settings'; font-size: 12px; }
+
+/* Hide the extra Fun Zone heading after its children are hidden. */
+.nav-label:nth-of-type(5) { display: none !important; }
+
+.topbar {
+  background: rgba(9,10,13,.88) !important;
+  border-bottom: 1px solid rgba(212,175,99,.08) !important;
+  backdrop-filter: blur(16px);
+}
+.topbar-search { background: #111318 !important; border-color: #1D2027 !important; }
+.topbar-search:focus-within { border-color: rgba(212,175,99,.45) !important; box-shadow: 0 0 0 3px rgba(212,175,99,.07); }
+.topbar-search i { color: #7A7E87 !important; }
+
+.welcome-banner {
+  background: linear-gradient(135deg, rgba(212,175,99,.10) 0%, rgba(17,20,25,.96) 55%, rgba(14,17,21,.98) 100%) !important;
+  border-color: rgba(212,175,99,.14) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.24);
+}
+
+.s-card:hover, .card-hover:hover { border-color: rgba(212,175,99,.22) !important; }
+
+.btn-primary {
+  background: linear-gradient(135deg, #D4AF63, #B9944C) !important;
+  color: #17130B !important;
+}
+.btn-primary:hover { background: linear-gradient(135deg, #E2C57F, #C7A45B) !important; }
+
+.badge-accent, .ib-accent, .av-accent { background: rgba(212,175,99,.11) !important; color: #D4AF63 !important; }
+
+@media (max-width: 900px) {
+  .sidebar { box-shadow: 15px 0 45px rgba(0,0,0,.42); }
+}
