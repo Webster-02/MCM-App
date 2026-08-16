@@ -2,585 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MySVL — Login</title>
-  <link rel="stylesheet" href="css/style.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MySVL — Testing Mode</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <style>
-    /* ── Login page only styles ── */
-    .login-page {
+    .test-page {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 24px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Animated grid background */
-    .login-page::before {
+    .test-page::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(91,80,255,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(91,80,255,.06) 1px, transparent 1px);
+        linear-gradient(rgba(91,80,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,80,255,.05) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
-      z-index: 0;
     }
 
-    /* Glow blob */
-    .login-page::after {
+    .test-page::after {
       content: '';
       position: fixed;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(91,80,255,.12) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
+      background: radial-gradient(circle, rgba(91,80,255,.10) 0%, transparent 70%);
+      inset: 50% auto auto 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
-      z-index: 0;
     }
 
-    .login-box {
-      width: 100%;
-      max-width: 420px;
+    .test-wrap {
+      width: min(900px, 100%);
       position: relative;
       z-index: 1;
+      text-align: center;
     }
 
-    /* Brand */
-    .brand {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .brand-logo {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    .test-logo {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: #fff;
-      margin: 0 auto 14px;
-      box-shadow: 0 8px 24px rgba(91,80,255,.35);
-    }
-    .brand-name {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: var(--text-primary);
-    }
-    .brand-tagline {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 5px;
+      font-size: 25px;
+      box-shadow: 0 10px 30px rgba(91,80,255,.28);
     }
 
-    /* Card */
-    .auth-card {
+    .test-wrap h1 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: clamp(26px, 4vw, 36px);
+    }
+
+    .test-subtitle {
+      margin: 8px auto 30px;
+      max-width: 620px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .testing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 24px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--amber);
+      background: var(--amber-soft);
+      color: var(--amber);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      text-align: left;
+    }
+
+    .dashboard-card {
+      display: block;
+      text-decoration: none;
+      color: var(--text-primary);
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--r-xl);
-      padding: 30px;
-      box-shadow: var(--shadow-lg);
+      padding: 24px;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
     }
 
-    /* Login / Register tabs */
-    .auth-tabs {
-      display: flex;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 4px;
-      margin-bottom: 26px;
-      gap: 4px;
-    }
-    .auth-tab {
-      flex: 1;
-      padding: 9px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-radius: var(--r-md);
-      border: 1px solid transparent;
-      background: transparent;
-      font-family: var(--font);
-      transition: var(--transition);
-    }
-    .auth-tab.active {
-      background: var(--bg-card);
-      border-color: var(--border);
-      color: var(--text-primary);
-    }
-
-    /* Error box */
-    .auth-error {
-      display: none;
-      align-items: center;
-      gap: 9px;
-      background: var(--red-soft);
-      border: 1px solid var(--red);
-      border-radius: var(--r-md);
-      padding: 11px 14px;
-      font-size: 12px;
-      color: var(--red);
-      margin-bottom: 18px;
-    }
-    .auth-error.show { display: flex; }
-
-    /* Form spacing */
-    .form-field { margin-bottom: 14px; }
-    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-
-    /* Password field */
-    .pass-field { position: relative; }
-    .pass-field .input { padding-right: 42px; }
-    .pass-eye {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 17px;
-      padding: 2px;
-      transition: var(--transition);
-      line-height: 1;
-    }
-    .pass-eye:hover { color: var(--text-primary); }
-
-    /* Role picker — only shown on register */
-    .role-section { margin-bottom: 18px; }
-    .role-section .input-label { margin-bottom: 8px; display: block; }
-    .role-cards { display: flex; flex-direction: column; gap: 7px; }
-    .role-card {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 12px 14px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: left;
-      width: 100%;
-      font-family: var(--font);
-      color: var(--text-primary);
-    }
-    .role-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
-    .role-card.active { border-color: var(--accent); background: var(--accent-soft); }
-    .role-card .role-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .role-card .role-name { font-size: 13px; font-weight: 500; }
-    .role-card .role-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-    .role-card .role-check {
-      margin-left: auto;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: transparent;
-      flex-shrink: 0;
-      transition: var(--transition);
-    }
-    .role-card.active .role-check {
-      background: var(--accent);
+    .dashboard-card:hover {
+      transform: translateY(-3px);
       border-color: var(--accent);
-      color: #fff;
+      background: var(--bg-card-hover);
     }
 
-    /* Submit btn loading state */
-    .btn-submit { margin-top: 6px; }
-    .btn-submit .btn-content { display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-submit .btn-spin  { display: none; }
-    .btn-submit.loading .btn-text { display: none; }
-    .btn-submit.loading .btn-spin { display: flex; }
-
-    /* Footer links */
-    .auth-footer {
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 18px;
-    }
-    .auth-footer .link {
+    .dashboard-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: var(--accent-soft);
       color: var(--accent);
-      cursor: pointer;
-      font-weight: 500;
+      margin-bottom: 16px;
     }
-    .auth-footer .link:hover { color: var(--accent-2); }
 
-    /* Forgot link */
-    .forgot-link {
-      text-align: right;
-      margin-bottom: 18px;
+    .dashboard-card h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
     }
-    .forgot-link a {
-      font-size: 12px;
+
+    .dashboard-card p {
+      margin: 0;
       color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.55;
     }
-    .forgot-link a:hover { color: var(--accent); }
 
-    /* Register-only fields */
-    .reg-only { display: none; }
-    .reg-only.show { display: block; }
-    .reg-row-only { display: none; }
-    .reg-row-only.show { display: grid; }
+    .test-footer {
+      margin-top: 24px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    @media (max-width: 680px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .test-page { padding: 18px; }
+    }
   </style>
 </head>
 <body>
+  <main class="test-page">
+    <section class="test-wrap fade-in">
+      <div class="test-logo"><i class="ti ti-sparkles"></i></div>
+      <h1>MySVL Testing Mode</h1>
+      <p class="test-subtitle">
+        Authentication is temporarily bypassed so you can test each dashboard directly.
+        No Firebase login is required on this page.
+      </p>
 
-<!-- ── Page Loader ── -->
-<div class="page-loader" id="pageLoader">
-  <div class="brand-logo" style="margin:0; width:46px; height:46px; font-size:22px;">
-    <i class="ti ti-sparkles"></i>
-  </div>
-  <div class="spinner sp-md"></div>
-</div>
-
-<!-- ── Toast ── -->
-<div id="toast-wrap"></div>
-
-<!-- ── Main ── -->
-<div class="login-page">
-  <div class="login-box fade-in">
-
-    <!-- Brand -->
-    <div class="brand">
-      <div class="brand-logo"><i class="ti ti-sparkles"></i></div>
-      <div class="brand-name">MySVL</div>
-      <div class="brand-tagline">Pakistan's Premium Student Learning Platform</div>
-    </div>
-
-    <!-- Auth Card -->
-    <div class="auth-card">
-
-      <!-- Tabs -->
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tabLogin"    onclick="setTab('login')">Sign In</button>
-        <button class="auth-tab"        id="tabRegister" onclick="setTab('register')">Create Account</button>
+      <div class="testing-badge">
+        <i class="ti ti-flask"></i>
+        TESTING MODE — LOGIN BYPASSED
       </div>
 
-      <!-- Error -->
-      <div class="auth-error" id="authError">
-        <i class="ti ti-alert-circle" style="font-size:17px; flex-shrink:0;"></i>
-        <span id="errorMsg">Something went wrong.</span>
+      <div class="dashboard-grid">
+        <a class="dashboard-card" href="student-dashboard.html">
+          <div class="dashboard-icon"><i class="ti ti-school"></i></div>
+          <h3>Student Dashboard</h3>
+          <p>Open and test the student experience directly.</p>
+        </a>
+
+        <a class="dashboard-card" href="teacher-dashboard.html">
+          <div class="dashboard-icon" style="background:var(--teal-soft);color:var(--teal);">
+            <i class="ti ti-chalkboard"></i>
+          </div>
+          <h3>Teacher / SVL Dashboard</h3>
+          <p>Open and test teacher tools, classes, slides and quizzes.</p>
+        </a>
+
+        <a class="dashboard-card" href="admin-dashboard.html">
+          <div class="dashboard-icon" style="background:var(--amber-soft);color:var(--amber);">
+            <i class="ti ti-building"></i>
+          </div>
+          <h3>University Admin Dashboard</h3>
+          <p>Open and test university administration features.</p>
+        </a>
+
+        <a class="dashboard-card" href="superadmin-dashboard.html">
+          <div class="dashboard-icon" style="background:var(--red-soft);color:var(--red);">
+            <i class="ti ti-shield"></i>
+          </div>
+          <h3>Super Admin Dashboard</h3>
+          <p>Open and test system-wide administration features.</p>
+        </a>
       </div>
 
-      <!-- FORM -->
-      <form id="authForm" onsubmit="handleSubmit(event)" novalidate>
-
-        <!-- Name row — register only -->
-        <div class="reg-row-only form-row-2" id="nameRow">
-          <div class="input-group">
-            <label class="input-label">First name</label>
-            <input type="text" class="input" id="fname" placeholder="Ali"/>
-          </div>
-          <div class="input-group">
-            <label class="input-label">Last name</label>
-            <input type="text" class="input" id="lname" placeholder="Raza"/>
-          </div>
-        </div>
-
-        <!-- Email -->
-        <div class="form-field">
-          <div class="input-group">
-            <label class="input-label">Email address</label>
-            <div class="input-wrap">
-              <i class="ti ti-mail input-icon"></i>
-              <input type="email" class="input" id="email" placeholder="you@example.com" autocomplete="email"/>
-            </div>
-          </div>
-        </div>
-
-        <!-- Password -->
-        <div class="form-field">
-          <div class="input-group">
-            <label class="input-label">Password</label>
-            <div class="pass-field">
-              <input type="password" class="input" id="password" placeholder="Min. 6 characters" autocomplete="current-password"/>
-              <button type="button" class="pass-eye" onclick="togglePass()">
-                <i class="ti ti-eye" id="passIcon"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Forgot password — login only -->
-        <div class="forgot-link" id="forgotRow">
-          <a href="#" onclick="forgotPass(event)">Forgot password?</a>
-        </div>
-
-        <!-- Role picker — register only -->
-        <div class="reg-only" id="roleSection">
-          <div class="role-section">
-            <label class="input-label">I am a...</label>
-            <div class="role-cards">
-
-              <button type="button" class="role-card active" data-role="student" onclick="pickRole('student')">
-                <div class="role-icon ib-accent"><i class="ti ti-school"></i></div>
-                <div>
-                  <div class="role-name">Student</div>
-                  <div class="role-desc">Access classes, slides, quizzes & social hub</div>
-                </div>
-                <div class="role-check"><i class="ti ti-check"></i></div>
-              </button>
-
-              <button type="button" class="role-card" data-role="teacher" onclick="pickRole('teacher')">
-                <div class="role-icon" style="background:var(--teal-soft);color:var(--teal);width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                  <i class="ti ti-chalkboard"></i>
-                </div>
-                <div>
-                  <div class="role-name">Teacher / SVL</div>
-                  <div class="role-desc">Upload slides, manage classes & quizzes</div>
-                </div>
-                <div class="role-check"><i class="ti ti-check"></i></div>
-              </button>
-
-              <button type="button" class="role-card" data-role="admin" onclick="pickRole('admin')">
-                <div class="role-icon" style="background:var(--amber-soft);color:var(--amber);width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                  <i class="ti ti-building"></i>
-                </div>
-                <div>
-                  <div class="role-name">University Admin</div>
-                  <div class="role-desc">Manage departments, teachers & students</div>
-                </div>
-                <div class="role-check"><i class="ti ti-check"></i></div>
-              </button>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit -->
-        <button type="submit" class="btn btn-primary btn-full btn-lg btn-submit" id="submitBtn">
-          <span class="btn-content">
-            <span class="btn-text" id="btnText">Sign In</span>
-            <span class="btn-spin">
-              <span class="spinner sp-sm" style="border-top-color:#fff; border-color:rgba(255,255,255,.3); border-top-color:#fff;"></span>
-            </span>
-          </span>
-        </button>
-
-      </form>
-
-    </div><!-- /auth-card -->
-
-    <!-- Footer -->
-    <div class="auth-footer" id="authFooter">
-      Don't have an account? <span class="link" onclick="setTab('register')">Create one free</span>
-    </div>
-
-  </div>
-</div><!-- /login-page -->
-
-
-<!-- ══════════════════════════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════════════════════════ -->
-<script type="module">
-  import { redirectIfLoggedIn, loginUser, registerUser, ROLE_PAGES } from "./js/auth.js";
-
-  // If already logged in → go to dashboard
-  redirectIfLoggedIn();
-
-  // Expose to window so inline handlers can call them
-  window._login    = loginUser;
-  window._register = registerUser;
-  window._pages    = ROLE_PAGES;
-
-  // Hide loader once Firebase is ready
-  setTimeout(() => {
-    document.getElementById('pageLoader').classList.add('hide');
-  }, 900);
-</script>
-
-<script>
-  // ── State ─────────────────────────────────────────────────
-  let currentTab  = 'login';
-  let selectedRole = 'student';
-  let passShown    = false;
-
-  // ── Tab Switch ─────────────────────────────────────────────
-  function setTab(tab) {
-    currentTab = tab;
-    const isReg = tab === 'register';
-
-    // Tab buttons
-    document.getElementById('tabLogin').classList.toggle('active', !isReg);
-    document.getElementById('tabRegister').classList.toggle('active', isReg);
-
-    // Show/hide register-only blocks
-    document.getElementById('nameRow').classList.toggle('show', isReg);
-    document.getElementById('roleSection').classList.toggle('show', isReg);
-    document.getElementById('forgotRow').style.display = isReg ? 'none' : '';
-
-    // Button text
-    document.getElementById('btnText').textContent = isReg ? 'Create Account' : 'Sign In';
-
-    // Footer text
-    document.getElementById('authFooter').innerHTML = isReg
-      ? 'Already have an account? <span class="link" onclick="setTab(\'login\')">Sign in</span>'
-      : "Don't have an account? <span class=\"link\" onclick=\"setTab('register')\">Create one free</span>";
-
-    clearError();
-  }
-
-  // ── Role Picker ────────────────────────────────────────────
-  function pickRole(role) {
-    selectedRole = role;
-    document.querySelectorAll('.role-card').forEach(c => {
-      c.classList.toggle('active', c.dataset.role === role);
-    });
-  }
-
-  // ── Password Eye ───────────────────────────────────────────
-  function togglePass() {
-    passShown = !passShown;
-    const inp  = document.getElementById('password');
-    const icon = document.getElementById('passIcon');
-    inp.type   = passShown ? 'text' : 'password';
-    icon.className = passShown ? 'ti ti-eye-off' : 'ti ti-eye';
-  }
-
-  // ── Error Helpers ──────────────────────────────────────────
-  function showError(msg) {
-    const box = document.getElementById('authError');
-    document.getElementById('errorMsg').textContent = msg;
-    box.classList.add('show');
-    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-  function clearError() {
-    document.getElementById('authError').classList.remove('show');
-  }
-
-  // ── Loading State ──────────────────────────────────────────
-  function setLoading(on) {
-    const btn = document.getElementById('submitBtn');
-    btn.classList.toggle('loading', on);
-    btn.disabled = on;
-  }
-
-  // ── Toast ──────────────────────────────────────────────────
-  function toast(title, msg = '', type = 'info') {
-    const icons  = { success:'ti-circle-check', error:'ti-alert-circle', info:'ti-info-circle', warning:'ti-alert-triangle' };
-    const colors = { success:'var(--green)', error:'var(--red)', info:'var(--accent)', warning:'var(--amber)' };
-    const wrap   = document.getElementById('toast-wrap');
-    const el     = document.createElement('div');
-    el.className = `toast toast-${type}`;
-    el.innerHTML = `
-      <i class="ti ${icons[type]}" style="color:${colors[type]};font-size:20px;flex-shrink:0;"></i>
-      <div class="toast-body">
-        <div class="toast-title">${title}</div>
-        ${msg ? `<div class="toast-msg">${msg}</div>` : ''}
-      </div>`;
-    wrap.appendChild(el);
-    setTimeout(() => {
-      el.style.animation = 'toastOut .25s ease forwards';
-      setTimeout(() => el.remove(), 260);
-    }, 3500);
-  }
-
-  // ── Forgot Password ────────────────────────────────────────
-  async function forgotPass(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    if (!email) { showError('Pehle email address likhein.'); return; }
-    try {
-      const { resetPassword } = await import('./js/auth.js');
-      await resetPassword(email);
-      toast('Email bhej di!', 'Password reset link check karein.', 'success');
-    } catch (err) {
-      toast('Error', err.message, 'error');
-    }
-  }
-
-  // ── Form Submit ────────────────────────────────────────────
-  async function handleSubmit(e) {
-    e.preventDefault();
-    clearError();
-
-    const email    = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-
-    // Validation
-    if (!email)         { showError('Email address likhein.'); return; }
-    if (!email.includes('@')) { showError('Sahi email address likhein.'); return; }
-    if (!password)      { showError('Password likhein.'); return; }
-    if (password.length < 6) { showError('Password kam az kam 6 characters ka hona chahiye.'); return; }
-
-    setLoading(true);
-
-    try {
-      if (currentTab === 'login') {
-        // ─── LOGIN ───
-        const user = await window._login(email, password);
-        toast(`Welcome back, ${user.name}! 👋`, 'Dashboard load ho raha hai...', 'success');
-        setTimeout(() => {
-          window.location.href = window._pages[user.role] || 'index.html';
-        }, 1000);
-
-      } else {
-        // ─── REGISTER ───
-        const fname = document.getElementById('fname').value.trim();
-        const lname = document.getElementById('lname').value.trim();
-        if (!fname) { showError('First name likhein.'); setLoading(false); return; }
-        if (!lname) { showError('Last name likhein.');  setLoading(false); return; }
-
-        await window._register({
-          email,
-          password,
-          name: `${fname} ${lname}`,
-          role: selectedRole
-        });
-
-        toast('Account ban gaya! 🎉', `Welcome to MySVL, ${fname}!`, 'success');
-        setTimeout(() => {
-          window.location.href = window._pages[selectedRole] || 'index.html';
-        }, 1100);
-      }
-
-    } catch (err) {
-      setLoading(false);
-      const known = {
-        'auth/email-already-in-use': 'Yeh email pehle se registered hai. Sign in karein.',
-        'auth/user-not-found':       'Yeh email registered nahi hai.',
-        'auth/wrong-password':       'Password galat hai.',
-        'auth/invalid-credential':   'Email ya password galat hai.',
-        'auth/invalid-email':        'Email format sahi nahi.',
-        'auth/too-many-requests':    'Zyada attempts — kuch der baad try karein.',
-        'auth/network-request-failed': 'Internet connection check karein.'
-      };
-      showError(known[err.code] || err.message || 'Kuch masla hua. Dobara try karein.');
-    }
-  }
-
-  // Expose to global
-  Object.assign(window, { setTab, pickRole, togglePass, handleSubmit, forgotPass });
-</script>
-
+      <div class="test-footer">
+        Firebase authentication files are kept intact for later re-enabling.
+      </div>
+    </section>
+  </main>
 </body>
 </html>
