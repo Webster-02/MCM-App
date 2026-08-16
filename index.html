@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MySVL — Testing Mode</title>
+  <title>MCM — Testing Mode</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/brand.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <style>
     .test-page {
@@ -12,9 +13,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 32px;
       position: relative;
       overflow: hidden;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(201,166,107,.10), transparent 38%),
+        var(--bg);
     }
 
     .test-page::before {
@@ -22,55 +26,74 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(91,80,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(91,80,255,.05) 1px, transparent 1px);
-      background-size: 48px 48px;
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 52px 52px;
       pointer-events: none;
-    }
-
-    .test-page::after {
-      content: '';
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(91,80,255,.10) 0%, transparent 70%);
-      inset: 50% auto auto 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
     }
 
     .test-wrap {
-      width: min(900px, 100%);
+      width: min(980px, 100%);
       position: relative;
       z-index: 1;
-      text-align: center;
     }
 
-    .test-logo {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 16px;
-      border-radius: 16px;
-      display: flex;
+    .brand-lockup {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff;
-      font-size: 25px;
-      box-shadow: 0 10px 30px rgba(91,80,255,.28);
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #b99257, #e2c993);
+      color: #17130d;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      padding-left: .16em;
+      box-shadow: 0 12px 34px rgba(201,166,107,.18);
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .20em;
+      color: var(--text-primary);
+    }
+
+    .test-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 700;
     }
 
     .test-wrap h1 {
       margin: 0;
+      font-size: clamp(36px, 6vw, 58px);
+      line-height: 1;
+      letter-spacing: -.055em;
       color: var(--text-primary);
-      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 800;
+      max-width: 780px;
     }
 
+    .test-wrap h1 span { color: var(--accent); }
+
     .test-subtitle {
-      margin: 8px auto 30px;
-      max-width: 620px;
-      color: var(--text-muted);
-      line-height: 1.6;
+      margin: 18px 0 28px;
+      max-width: 680px;
+      color: var(--text-secondary);
+      line-height: 1.75;
       font-size: 14px;
     }
 
@@ -78,48 +101,62 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      margin-bottom: 24px;
-      padding: 7px 12px;
+      margin-bottom: 18px;
+      padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid var(--amber);
-      background: var(--amber-soft);
-      color: var(--amber);
-      font-size: 11px;
-      font-weight: 600;
+      border: 1px solid rgba(201,166,107,.24);
+      background: rgba(201,166,107,.08);
+      color: var(--accent-2);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
     }
 
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      text-align: left;
+      gap: 14px;
+      margin-top: 16px;
     }
 
     .dashboard-card {
       display: block;
       text-decoration: none;
       color: var(--text-primary);
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 24px;
-      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px;
+      padding: 22px;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 15%, rgba(201,166,107,.06) 50%, transparent 85%);
+      transform: translateX(-100%);
+      transition: transform .5s ease;
+      pointer-events: none;
     }
 
     .dashboard-card:hover {
       transform: translateY(-3px);
-      border-color: var(--accent);
-      background: var(--bg-card-hover);
+      border-color: rgba(201,166,107,.28);
+      box-shadow: 0 18px 45px rgba(0,0,0,.28);
     }
 
+    .dashboard-card:hover::after { transform: translateX(100%); }
+
     .dashboard-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
       background: var(--accent-soft);
       color: var(--accent);
       margin-bottom: 16px;
@@ -127,78 +164,83 @@
 
     .dashboard-card h3 {
       margin: 0 0 7px;
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: 700;
     }
 
     .dashboard-card p {
       margin: 0;
       color: var(--text-muted);
       font-size: 12px;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .test-footer {
-      margin-top: 24px;
+      margin-top: 18px;
       color: var(--text-muted);
-      font-size: 11px;
+      font-size: 10px;
+      letter-spacing: .04em;
     }
 
     @media (max-width: 680px) {
+      .test-page { padding: 22px; }
       .dashboard-grid { grid-template-columns: 1fr; }
-      .test-page { padding: 18px; }
+      .test-wrap h1 { font-size: 40px; }
     }
   </style>
 </head>
 <body>
   <main class="test-page">
-    <section class="test-wrap fade-in">
-      <div class="test-logo"><i class="ti ti-sparkles"></i></div>
-      <h1>MySVL Testing Mode</h1>
+    <section class="test-wrap">
+      <div class="brand-lockup">
+        <div class="brand-mark">MCM</div>
+        <div class="brand-name">MCM</div>
+      </div>
+
+      <div class="test-kicker">Modern Learning Platform</div>
+      <h1>A cleaner, simpler <span>MCM</span> experience.</h1>
       <p class="test-subtitle">
-        Authentication is temporarily bypassed so you can test each dashboard directly.
-        No Firebase login is required on this page.
+        Authentication is temporarily bypassed while we rebuild the app. Select a role below to preview its workspace directly.
       </p>
 
       <div class="testing-badge">
         <i class="ti ti-flask"></i>
-        TESTING MODE — LOGIN BYPASSED
+        TESTING MODE · AUTHENTICATION BYPASSED
       </div>
 
       <div class="dashboard-grid">
         <a class="dashboard-card" href="student-dashboard.html">
           <div class="dashboard-icon"><i class="ti ti-school"></i></div>
-          <h3>Student Dashboard</h3>
-          <p>Open and test the student experience directly.</p>
+          <h3>Student</h3>
+          <p>Learning, quizzes, study tools, progress and community.</p>
         </a>
 
         <a class="dashboard-card" href="teacher-dashboard.html">
           <div class="dashboard-icon" style="background:var(--teal-soft);color:var(--teal);">
             <i class="ti ti-chalkboard"></i>
           </div>
-          <h3>Teacher / SVL Dashboard</h3>
-          <p>Open and test teacher tools, classes, slides and quizzes.</p>
+          <h3>Teacher</h3>
+          <p>Classes, slides, assignments, quizzes and student insight.</p>
         </a>
 
         <a class="dashboard-card" href="admin-dashboard.html">
           <div class="dashboard-icon" style="background:var(--amber-soft);color:var(--amber);">
             <i class="ti ti-building"></i>
           </div>
-          <h3>University Admin Dashboard</h3>
-          <p>Open and test university administration features.</p>
+          <h3>University Admin</h3>
+          <p>Academic operations, users, reporting and administration.</p>
         </a>
 
         <a class="dashboard-card" href="superadmin-dashboard.html">
-          <div class="dashboard-icon" style="background:var(--red-soft);color:var(--red);">
+          <div class="dashboard-icon" style="background:var(--purple-soft);color:var(--purple);">
             <i class="ti ti-shield"></i>
           </div>
-          <h3>Super Admin Dashboard</h3>
-          <p>Open and test system-wide administration features.</p>
+          <h3>Super Admin</h3>
+          <p>Platform-wide controls, governance and system management.</p>
         </a>
       </div>
 
-      <div class="test-footer">
-        Firebase authentication files are kept intact for later re-enabling.
-      </div>
+      <div class="test-footer">MCM preview environment · production authentication will be restored after the redesign.</div>
     </section>
   </main>
 </body>
