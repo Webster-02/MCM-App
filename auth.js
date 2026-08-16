@@ -1,4 +1,5 @@
 // MySVL — Auth & Role Management
+// NOTE: Authentication is temporarily bypassed for application testing.
 
 import { auth, db } from "./firebase-config.js";
 import {
@@ -12,12 +13,43 @@ import {
   doc, setDoc, getDoc, serverTimestamp, updateDoc
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
+// Testing mode: dashboard pages can be opened directly without Firebase login.
+// Set to false later to restore normal authentication guards.
+const TEST_MODE = true;
+
 const ROLE_PAGES = {
   student: "student-dashboard.html",
   teacher: "teacher-dashboard.html",
   admin:   "admin-dashboard.html",
   superadmin: "superadmin-dashboard.html"
 };
+
+function testUserForRoles(allowedRoles = []) {
+  const role = allowedRoles[0] || "student";
+  const names = {
+    student: "Ali Raza",
+    teacher: "Dr. Ahmed Khan",
+    admin: "University Admin",
+    superadmin: "System Administrator"
+  };
+  const emails = {
+    student: "student@test.local",
+    teacher: "teacher@test.local",
+    admin: "admin@test.local",
+    superadmin: "superadmin@test.local"
+  };
+
+  return {
+    uid: `testing-${role}`,
+    name: names[role] || "Test User",
+    email: emails[role] || "test@test.local",
+    role,
+    isActive: true,
+    universityId: "TEST-UNIVERSITY",
+    departmentId: "TEST-DEPARTMENT",
+    classId: "TEST-CLASS"
+  };
+}
 
 async function registerUser({ email, password, name, role, universityId = null, departmentId = null, classId = null }) {
   const cred = await createUserWithEmailAndPassword(auth, email, password);
@@ -75,13 +107,21 @@ async function loginUser(email, password) {
 }
 
 async function logoutUser() {
-  await signOut(auth);
-  sessionStorage.clear();
-  window.location.href = "index.html";
+  try {
+    await signOut(auth);
+  } finally {
+    sessionStorage.clear();
+    window.location.href = "index.html";
+  }
 }
 
 function getCurrentUser() {
-  try { return JSON.parse(sessionStorage.getItem("msv_user")); } catch { return null; }
+  try {
+    const existing = JSON.parse(sessionStorage.getItem("msv_user"));
+    if (existing) return existing;
+  } catch {}
+
+  return TEST_MODE ? testUserForRoles([]) : null;
 }
 
 async function fetchUserProfile(fbUser) {
@@ -113,6 +153,14 @@ async function fetchUserProfile(fbUser) {
 }
 
 function requireAuth(allowedRoles = []) {
+  // TEST MODE: never redirect to index.html. Give each dashboard a matching
+  // local test user based on the role(s) requested by the page.
+  if (TEST_MODE) {
+    const u = testUserForRoles(allowedRoles);
+    sessionStorage.setItem("msv_user", JSON.stringify(u));
+    return Promise.resolve(u);
+  }
+
   return new Promise((resolve, reject) => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       unsub();
@@ -140,6 +188,9 @@ function requireAuth(allowedRoles = []) {
 }
 
 function redirectIfLoggedIn() {
+  // Login is bypassed while testing, so this intentionally does nothing.
+  if (TEST_MODE) return;
+
   const unsub = onAuthStateChanged(auth, async (fbUser) => {
     unsub();
     if (!fbUser) return;
