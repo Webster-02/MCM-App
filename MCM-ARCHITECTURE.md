@@ -1,6 +1,6 @@
 # MCM Simple Architecture
 
-MCM should stay simple. The core product flow is:
+MCM should stay simple. **SVL means Student Voice Leader**, similar to a class representative (CR). It is not a teaching subject or learning space.
 
 ```text
 Super Admin
@@ -9,37 +9,36 @@ University
    ↓
 University Admin
    ↓
-Classes
-   ↓
-SVLs
-   ↓
-Students + Faculty
-   ↓
-Slides / Quizzes / Assignments / Attendance / Grades / Announcements
+Class
+   ├── Faculty
+   ├── Students
+   └── SVL (Student Voice Leader / CR)
+         ↓
+      Own class portal
+
+Faculty → manages teaching content
+Students → consume learning content
+SVL → manages class student list + class communication
 ```
 
 ## 1. Super Admin
 
-The Super Admin is the platform owner.
+Platform owner.
 
-Main job:
+Main responsibilities:
 
 - Add and manage universities
 - Create and manage University Admin accounts
-- Manage platform plans, billing and global settings
-- View platform level analytics and audit logs
+- Manage plans, billing and global settings
+- View platform analytics and audit logs
 
-The Super Admin does not need to manage everyday classes, SVLs or students.
+Super Admin does not manage everyday class rosters.
 
 ## 2. University Admin
 
-The University Admin runs one university.
+Runs one university and controls the university setup.
 
-This is the main management role inside the university.
-
-The Admin workflow is deliberately simple:
-
-### Step A — Create classes
+### Core workflow
 
 `Admin → Classes → Add Class`
 
@@ -49,111 +48,118 @@ Example:
 
 `BSCS Semester 5 B`
 
-Each class belongs to one university.
+Then inside the class:
 
-### Step B — Add faculty to a class or SVL
+`Class → Faculty → Add/Assign Faculty`
 
-`Admin → Class → Faculty → Add Faculty`
+`Class → Students → Add/Manage Students`
 
-The Admin can create/select a teacher and assign them to the relevant SVL.
+`Class → SVL → Assign Student Voice Leader`
 
-### Step C — Add students to the class
+The Admin can replace the SVL whenever needed.
 
-`Admin → Class → Students → Add Student`
+The Admin also manages/oversees:
 
-Students become members of that class.
-
-### Step D — Create SVLs
-
-`Admin → Class → SVLs → Add SVL`
-
-Example:
-
-`Data Structures`
-
-`Database Systems`
-
-`Operating Systems`
-
-Each SVL belongs to one class and has an assigned faculty member.
-
-### Step E — Add students to an SVL
-
-`Admin → SVL → Students → Add Students`
-
-Only selected students from the class can be enrolled in that SVL.
-
-This makes the relationship easy to understand:
-
-```text
-Class
-├── Students
-├── Faculty
-└── SVLs
-    ├── Students
-    └── Faculty
-```
-
-### Step F — Manage academic data
-
-The Admin can manage or oversee:
-
-- Announcements
 - Slides
 - Quizzes
 - Assignments
 - Attendance
 - Grades
-- Class/SVL schedules
+- Announcements
+- Schedules
 - Basic reports
 
-For normal teaching content, the assigned Faculty member can also manage the content inside their SVL.
+## 3. SVL — Student Voice Leader
 
-## 3. Faculty
+SVL is a **class representative / CR-style role**.
 
-Faculty should not manage university structure.
+An SVL belongs to **one class only** and receives a small, focused portal.
 
-They only work inside their assigned SVLs.
+### SVL can
+
+- View their assigned class
+- View the current student roster
+- Add an existing student to their class
+- Remove a student from their class, subject to university policy
+- View class announcements
+- Post class-level announcements/messages
+- View class slides, quizzes and assignments
+- View class attendance/grade summaries when allowed
+- Raise or communicate class issues to faculty/admin
+
+### SVL cannot
+
+- Create universities
+- Create classes
+- Create or edit faculty accounts
+- Change grades
+- Mark attendance
+- Upload official teaching slides as the teacher
+- Create official quizzes/assignments
+- Access another class
+- Access university-wide admin controls
+
+### SVL portal
+
+```text
+MCM
+
+My Class
+Students
+Announcements
+Learning Resources
+Class Updates
+Profile
+```
+
+The most important SVL action is:
+
+`My Class → Students → Add Student`
+
+When an SVL adds a student, the system creates an enrollment for **that SVL's own class only**. The SVL cannot choose another class.
+
+## 4. Faculty
+
+Faculty members manage teaching.
 
 ```text
 Faculty
-   ↓
-My SVLs
-   ↓
-Select SVL
-   ↓
+  ↓
+My Classes / Assigned Teaching
+  ↓
+Select Class
+  ↓
 Manage Learning
 ```
 
-Inside an SVL they can:
+Faculty can:
 
 - Upload slides
 - Create quizzes
 - Create assignments
-- Post announcements
+- Publish official announcements
 - Take attendance
 - Enter grades
-- Manage class discussion
 - View enrolled students
+- Manage class discussion
 
-## 4. Student
+Faculty cannot change university-level structure.
 
-Students only see what they are enrolled in.
+## 5. Student
+
+Students see only their own enrolled classes and learning resources.
 
 ```text
 Student
-   ↓
-My SVLs
-   ↓
-Select SVL
-   ↓
+  ↓
+My Classes
+  ↓
 Learn
 ```
 
 Student features:
 
 - View slides
-- Watch/read learning material
 - Complete quizzes
 - Complete assignments
 - View announcements
@@ -162,66 +168,73 @@ Student features:
 - Track progress
 - Participate in Community
 
-## Simple ownership rules
+## Ownership rules
 
-| Area | Super Admin | University Admin | Faculty | Student |
-|---|---|---|---|---|
-| University | Full | Own university | View | No |
-| Classes | View | Create/manage | View assigned | View enrolled |
-| SVLs | View | Create/manage | Manage assigned | View enrolled |
-| Faculty | Manage admins | Create/manage | Self | View assigned |
-| Students | View | Create/manage | View assigned | Self |
-| Slides | Global view | Manage/oversee | Create/manage own | View |
-| Quizzes | Global view | Manage/oversee | Create/manage own | Attempt |
-| Assignments | Global view | Manage/oversee | Create/manage own | Submit |
-| Attendance | View | Manage/oversee | Record own SVLs | View own |
-| Grades | View | Manage/oversee | Enter own SVL grades | View own |
-| Announcements | Global | University/class | SVL/class | Read |
+| Area | Super Admin | University Admin | Faculty | SVL | Student |
+|---|---|---|---|---|---|
+| University | Full | Own | View | No | No |
+| Class | Global view | Create/manage | Assigned | Own only | Enrolled only |
+| Faculty | Manage | Create/manage | Self | View | View assigned |
+| Students | Global view | Create/manage | View assigned | Add/remove in own class | Self |
+| SVL assignment | Global view | Assign/replace | View | Self | View |
+| Slides | Global view | Manage/oversee | Create/manage | View | View |
+| Quizzes | Global view | Manage/oversee | Create/manage | View | Attempt |
+| Assignments | Global view | Manage/oversee | Create/manage | View | Submit |
+| Attendance | View | Manage/oversee | Record | View summary | View own |
+| Grades | View | Manage/oversee | Enter | View summary | View own |
+| Announcements | Global | University/class | Official class | Class communication | Read |
 
-## Recommended admin screen
+## Recommended Admin screen
 
-The University Admin dashboard should focus on these six primary actions:
+Keep the University Admin navigation simple:
 
-1. **Classes** — create/manage classes
-2. **Students** — add and manage students
-3. **Faculty** — add and manage teachers
-4. **SVLs** — create SVLs and assign faculty/students
-5. **Content** — slides, quizzes and assignments
-6. **Announcements** — publish updates
+1. **Classes**
+2. **Students**
+3. **Faculty**
+4. **SVLs**
+5. **Content**
+6. **Announcements**
+7. **Reports**
+8. **Settings**
 
-Everything else should be secondary under Reports, Settings or System.
-
-## Recommended class setup wizard
-
-When an Admin clicks **Add Class**, use a simple guided flow:
+The Admin should primarily work from the Class page:
 
 ```text
-1. Class details
+Classes
+  ↓
+Select Class
+  ↓
+┌─────────────────────────────────┐
+│ Class Overview                  │
+│ Students | Faculty | SVL        │
+│                                 │
+│ Learning                        │
+│ Slides | Quizzes | Assignments  │
+│                                 │
+│ Operations                      │
+│ Attendance | Grades | Announce  │
+└─────────────────────────────────┘
+```
+
+## Recommended class setup
+
+```text
+1. Add Class
       ↓
-2. Add/select Faculty
+2. Add/Assign Faculty
       ↓
 3. Add Students
       ↓
-4. Create SVLs
+4. Assign SVL (CR)
       ↓
-5. Assign Faculty to SVLs
-      ↓
-6. Assign Students to SVLs
-      ↓
-7. Finish
+5. Finish
 ```
 
-After setup, the Admin should see one class card with:
-
-- Number of students
-- Number of faculty
-- Number of SVLs
-- Upcoming announcements
-- Quick actions
+SVL assignment happens **after the class exists**. The SVL is simply one student from that class who gets additional class-management permissions.
 
 ## Firestore collections
 
-Keep the backend simple around these core collections:
+Core collections:
 
 - `universities`
 - `users`
@@ -238,10 +251,10 @@ Keep the backend simple around these core collections:
 - `auditLogs`
 - `plans`
 
-Departments and programmes can remain optional metadata later. They should not block the core Class → SVL → Student workflow.
+Departments and programmes remain optional metadata and should not block the core workflow.
 
 ## Important production rule
 
-The JavaScript permission layer is for UX only. Before production, Firebase Authentication claims and Firestore Security Rules must enforce the same ownership and access rules on the server side.
+JavaScript permissions are UX only. Before production, Firebase Authentication claims and Firestore Security Rules must enforce university and class ownership on the server side.
 
 The project remains in TEST_MODE while the interface and workflows are being rebuilt.
