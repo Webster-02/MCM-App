@@ -1,172 +1,229 @@
-# MCM Architecture
+# MCM Simple Architecture
 
-## Ownership model
+MCM should stay simple. The core product flow is:
 
-MCM uses a strict top-down ownership model. A user can only manage data inside the scope assigned to their role.
+```text
+Super Admin
+   ↓
+University
+   ↓
+University Admin
+   ↓
+Classes
+   ↓
+SVLs
+   ↓
+Students + Faculty
+   ↓
+Slides / Quizzes / Assignments / Attendance / Grades / Announcements
+```
 
-### 1. Super Admin — platform owner
+## 1. Super Admin
 
-Owns the entire MCM platform.
+The Super Admin is the platform owner.
 
-Can create and manage:
+Main job:
 
-- Universities
-- University Admin accounts
-- Plans and billing configuration
-- Global platform settings
-- Global analytics and audit logs
+- Add and manage universities
+- Create and manage University Admin accounts
+- Manage platform plans, billing and global settings
+- View platform level analytics and audit logs
 
-The Super Admin does **not** create ordinary students or teachers one by one. Those belong to a university and are managed by that university's Admin.
+The Super Admin does not need to manage everyday classes, SVLs or students.
 
-### 2. University Admin — university owner
+## 2. University Admin
 
-Owns one university only.
+The University Admin runs one university.
 
-Flow:
+This is the main management role inside the university.
 
-`University → Departments → Programmes → Faculty → Students → Classes → SVLs`
+The Admin workflow is deliberately simple:
 
-The University Admin can create and manage:
+### Step A — Create classes
 
-- Departments
-- Programmes
-- Faculty / teachers
-- Students
-- Classes
-- SVLs
-- University announcements
-- University reports
+`Admin → Classes → Add Class`
 
-The University Admin is restricted to `universityId`.
+Example:
 
-### 3. Faculty / Teacher
+`BSCS Semester 5 A`
 
-A teacher never creates a new university or changes university structure.
+`BSCS Semester 5 B`
 
-A teacher manages the SVLs/classes assigned to them.
+Each class belongs to one university.
 
-Inside an assigned SVL, the teacher can manage:
+### Step B — Add faculty to a class or SVL
 
+`Admin → Class → Faculty → Add Faculty`
+
+The Admin can create/select a teacher and assign them to the relevant SVL.
+
+### Step C — Add students to the class
+
+`Admin → Class → Students → Add Student`
+
+Students become members of that class.
+
+### Step D — Create SVLs
+
+`Admin → Class → SVLs → Add SVL`
+
+Example:
+
+`Data Structures`
+
+`Database Systems`
+
+`Operating Systems`
+
+Each SVL belongs to one class and has an assigned faculty member.
+
+### Step E — Add students to an SVL
+
+`Admin → SVL → Students → Add Students`
+
+Only selected students from the class can be enrolled in that SVL.
+
+This makes the relationship easy to understand:
+
+```text
+Class
+├── Students
+├── Faculty
+└── SVLs
+    ├── Students
+    └── Faculty
+```
+
+### Step F — Manage academic data
+
+The Admin can manage or oversee:
+
+- Announcements
 - Slides
 - Quizzes
 - Assignments
 - Attendance
 - Grades
-- Class discussion / communication
+- Class/SVL schedules
+- Basic reports
 
-Teacher access is restricted by `teacherId`, assigned `svlIds`, and university scope.
+For normal teaching content, the assigned Faculty member can also manage the content inside their SVL.
 
-### 4. Student
+## 3. Faculty
 
-A student cannot create or administer academic structure.
+Faculty should not manage university structure.
 
-A student only consumes resources belonging to enrolled SVLs/classes.
-
-Student access includes:
-
-- Enrolled SVLs
-- Slides
-- Quizzes
-- Assignments
-- Personal attendance
-- Personal grades
-- Personal progress
-
-## Entity relationships
+They only work inside their assigned SVLs.
 
 ```text
-MCM Platform
-│
-├── Universities
-│   └── University Admin
-│       │
-│       ├── Departments
-│       │   └── Programmes
-│       │
-│       ├── Faculty
-│       │   └── Assigned SVLs
-│       │       ├── Slides
-│       │       ├── Quizzes
-│       │       ├── Assignments
-│       │       ├── Attendance
-│       │       └── Grades
-│       │
-│       ├── Students
-│       │   └── Enrolments
-│       │       └── SVLs
-│       │
-│       └── Classes
-│           └── SVLs
+Faculty
+   ↓
+My SVLs
+   ↓
+Select SVL
+   ↓
+Manage Learning
 ```
 
-## Recommended operational workflow
+Inside an SVL they can:
 
-### Creating a university
+- Upload slides
+- Create quizzes
+- Create assignments
+- Post announcements
+- Take attendance
+- Enter grades
+- Manage class discussion
+- View enrolled students
 
-`Super Admin → Universities → Add University → Create University Admin`
+## 4. Student
 
-The university gets a unique `universityId`. The admin account is linked to that ID.
+Students only see what they are enrolled in.
 
-### Setting up the university
+```text
+Student
+   ↓
+My SVLs
+   ↓
+Select SVL
+   ↓
+Learn
+```
 
-`University Admin → Departments → Add Department`
+Student features:
 
-`University Admin → Programmes → Add Programme`
+- View slides
+- Watch/read learning material
+- Complete quizzes
+- Complete assignments
+- View announcements
+- View attendance
+- View grades
+- Track progress
+- Participate in Community
 
-`University Admin → Faculty → Add Faculty`
+## Simple ownership rules
 
-`University Admin → Students → Add Student`
+| Area | Super Admin | University Admin | Faculty | Student |
+|---|---|---|---|---|
+| University | Full | Own university | View | No |
+| Classes | View | Create/manage | View assigned | View enrolled |
+| SVLs | View | Create/manage | Manage assigned | View enrolled |
+| Faculty | Manage admins | Create/manage | Self | View assigned |
+| Students | View | Create/manage | View assigned | Self |
+| Slides | Global view | Manage/oversee | Create/manage own | View |
+| Quizzes | Global view | Manage/oversee | Create/manage own | Attempt |
+| Assignments | Global view | Manage/oversee | Create/manage own | Submit |
+| Attendance | View | Manage/oversee | Record own SVLs | View own |
+| Grades | View | Manage/oversee | Enter own SVL grades | View own |
+| Announcements | Global | University/class | SVL/class | Read |
 
-### Creating a class
+## Recommended admin screen
 
-`University Admin → Classes → Create Class`
+The University Admin dashboard should focus on these six primary actions:
 
-The class receives:
+1. **Classes** — create/manage classes
+2. **Students** — add and manage students
+3. **Faculty** — add and manage teachers
+4. **SVLs** — create SVLs and assign faculty/students
+5. **Content** — slides, quizzes and assignments
+6. **Announcements** — publish updates
 
-- `universityId`
-- `departmentId`
-- `programmeId`
-- `teacherIds[]`
-- `studentIds[]`
+Everything else should be secondary under Reports, Settings or System.
 
-### Creating an SVL
+## Recommended class setup wizard
 
-`University Admin → SVLs → Create SVL`
+When an Admin clicks **Add Class**, use a simple guided flow:
 
-An SVL belongs to a class and has a teacher owner/assignment.
+```text
+1. Class details
+      ↓
+2. Add/select Faculty
+      ↓
+3. Add Students
+      ↓
+4. Create SVLs
+      ↓
+5. Assign Faculty to SVLs
+      ↓
+6. Assign Students to SVLs
+      ↓
+7. Finish
+```
 
-Recommended fields:
+After setup, the Admin should see one class card with:
 
-- `universityId`
-- `classId`
-- `teacherId`
-- `title`
-- `subject`
-- `status`
-- `term`
-- `schedule`
+- Number of students
+- Number of faculty
+- Number of SVLs
+- Upcoming announcements
+- Quick actions
 
-### Teaching workflow
+## Firestore collections
 
-`Teacher → My SVLs → Select SVL → Manage Learning`
-
-Within the selected SVL:
-
-`Slides / Quizzes / Assignments / Attendance / Grades / Discussion`
-
-### Student workflow
-
-`Student → My SVLs → Select SVL → Learn`
-
-The student sees only content from their enrolled SVLs.
-
-## Firestore collection model
-
-Current MCM data helpers use these collections:
+Keep the backend simple around these core collections:
 
 - `universities`
-- `departments`
-- `programmes`
 - `users`
 - `classes`
 - `svls`
@@ -181,60 +238,10 @@ Current MCM data helpers use these collections:
 - `auditLogs`
 - `plans`
 
-## Role permissions
-
-### Super Admin
-
-`universities:create/read/update/delete`
-
-`admins:create/read/update/delete`
-
-`plans:manage`
-
-`platform:analytics`
-
-`platform:audit`
-
-### University Admin
-
-`departments:*`
-
-`programs:*`
-
-`faculty:*`
-
-`students:*`
-
-`classes:*`
-
-`svls:*`
-
-`announcements:create`
-
-`reports:read`
-
-### Teacher
-
-Own SVLs plus:
-
-`slides:*`
-
-`quizzes:*`
-
-`assignments:*`
-
-`attendance:manage_own`
-
-`grades:manage_own`
-
-`students:read_own`
-
-### Student
-
-Read-only access to enrolled SVLs/content plus personal records.
+Departments and programmes can remain optional metadata later. They should not block the core Class → SVL → Student workflow.
 
 ## Important production rule
 
-The JavaScript permission layer improves UX and prevents accidental actions, but it is **not a security boundary**. Before production, Firebase Authentication claims and Firestore Security Rules must enforce the same ownership model on the server side.
+The JavaScript permission layer is for UX only. Before production, Firebase Authentication claims and Firestore Security Rules must enforce the same ownership and access rules on the server side.
 
-The current project remains in `TEST_MODE` while the UI and workflows are being rebuilt.
+The project remains in TEST_MODE while the interface and workflows are being rebuilt.
