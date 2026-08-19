@@ -31,6 +31,20 @@ function testUserForRoles(allowedRoles = []) {
   return { ...base, role, isActive:true, createdAt:null, permissionsDescription:describeRole(role), entityFlow:getEntityFlow() };
 }
 
+function loadThemeSystem() {
+  if (window.__mcmThemeLoading || window.MCMTheme) {
+    window.MCMTheme?.init?.();
+    return;
+  }
+  window.__mcmThemeLoading = true;
+  const script = document.createElement("script");
+  script.src = "./mcm-theme.js?v=20260819";
+  script.async = false;
+  script.onload = () => window.MCMTheme?.init?.();
+  script.onerror = () => console.warn("MCM theme system could not be loaded.");
+  document.head.appendChild(script);
+}
+
 async function registerUser({ email, password, name, role, universityId=null, departmentId=null, classId=null }) {
   const cred = await createUserWithEmailAndPassword(auth, email, password);
   await setDoc(doc(db,"users",cred.user.uid), { uid:cred.user.uid,name,email,role,universityId,departmentId,classId,isActive:true,createdAt:serverTimestamp() });
@@ -52,10 +66,18 @@ async function logoutUser(){ try{await signOut(auth);}finally{sessionStorage.cle
 function getCurrentUser(){ try{return JSON.parse(sessionStorage.getItem(USER_SESSION_KEY)) || (TEST_MODE?testUserForRoles([]):null);}catch{return TEST_MODE?testUserForRoles([]):null;} }
 async function fetchUserProfile(fbUser){ const snap=await getDoc(doc(db,"users",fbUser.uid)); if(!snap.exists()) throw new Error("User profile not found."); return {...snap.data(),uid:fbUser.uid}; }
 function requireAuth(allowedRoles=[]){
-  if(TEST_MODE){ const u=testUserForRoles(allowedRoles); sessionStorage.setItem(USER_SESSION_KEY,JSON.stringify(u)); return Promise.resolve(u); }
-  return new Promise((resolve,reject)=>{ const unsub=onAuthStateChanged(auth,async fbUser=>{ unsub(); if(!fbUser){window.location.href="index.html";reject(new Error("Not authenticated"));return;} try{const u=await fetchUserProfile(fbUser);if(!u.isActive)throw new Error("Account disabled.");if(allowedRoles.length&&!allowedRoles.includes(u.role)){window.location.href=ROLE_PAGES[u.role]||"index.html";reject(new Error("Unauthorized"));return;}sessionStorage.setItem(USER_SESSION_KEY,JSON.stringify(u));resolve(u);}catch(err){reject(err);} }); });
+  if(TEST_MODE){
+    const u=testUserForRoles(allowedRoles);
+    sessionStorage.setItem(USER_SESSION_KEY,JSON.stringify(u));
+    // Theme UI is loaded here so every dashboard gets the same per-account Appearance control,
+    // even when the individual dashboard does not import dashboard-common.js.
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",loadThemeSystem,{once:true});
+    else loadThemeSystem();
+    return Promise.resolve(u);
+  }
+  return new Promise((resolve,reject)=>{ const unsub=onAuthStateChanged(auth,async fbUser=>{ unsub(); if(!fbUser){window.location.href="index.html";reject(new Error("Not authenticated"));return;} try{const u=await fetchUserProfile(fbUser);if(!u.isActive)throw new Error("Account disabled.");if(allowedRoles.length&&!allowedRoles.includes(u.role)){window.location.href=ROLE_PAGES[u.role]||"index.html";reject(new Error("Unauthorized"));return;}sessionStorage.setItem(USER_SESSION_KEY,JSON.stringify(u));loadThemeSystem();resolve(u);}catch(err){reject(err);} }); });
 }
 function redirectIfLoggedIn(){ if(TEST_MODE)return; const unsub=onAuthStateChanged(auth,async fbUser=>{unsub();if(!fbUser)return;try{const u=await fetchUserProfile(fbUser);window.location.href=ROLE_PAGES[u.role]||"index.html";}catch(error){console.warn("Login redirect failed",error);}}); }
 async function resetPassword(email){await sendPasswordResetEmail(auth,email);}
 
-export {registerUser,loginUser,logoutUser,getCurrentUser,requireAuth,redirectIfLoggedIn,resetPassword,ROLE_PAGES,TEST_MODE};
+export {registerUser,loginUser,getCurrentUser,requireAuth,redirectIfLoggedIn,resetPassword,logoutUser,ROLE_PAGES,TEST_MODE};
