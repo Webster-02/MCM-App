@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MCM — Settings & Appearance</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<style>
+  body{min-height:100vh;background:#080808;color:var(--text-primary)}
+  .settings-shell{max-width:980px;margin:0 auto;padding:34px 22px 60px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+  .brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#c9a66b,#8b6b39);color:#fff}
+  .brand-name{font-size:15px;font-weight:800;letter-spacing:.18em}.brand-sub{font-size:10px;color:var(--text-muted);margin-top:2px}
+  .back{border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);padding:9px 12px;border-radius:10px;cursor:pointer;font:500 11px var(--font)}
+  .hero{background:linear-gradient(135deg,#111,#0d0e10 65%,#17120c);border:1px solid rgba(201,166,107,.16);border-radius:20px;padding:24px;margin-bottom:18px}
+  .hero-kicker{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.hero h1{font-size:28px;margin:7px 0}.hero p{font-size:12px;color:var(--text-secondary);line-height:1.7}
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:14px}.card h2{font-size:14px;margin:0 0 5px}.card p{font-size:11px;color:var(--text-muted);line-height:1.6;margin:0 0 16px}
+  .theme-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.theme{border:1px solid var(--border);background:#0d0d11;color:var(--text-primary);border-radius:13px;padding:10px;cursor:pointer;text-align:left;transition:.18s}.theme:hover,.theme.active{border-color:var(--accent);background:var(--accent-soft)}.swatch{height:54px;border-radius:10px;margin-bottom:9px;background:linear-gradient(135deg,#090909 0 55%,var(--swatch) 56%)}.theme strong{display:block;font-size:10px}.theme small{display:block;color:var(--text-muted);font-size:8px;margin-top:3px}
+  .personal-note{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--accent-soft);border:1px solid var(--accent-glow);font-size:10px;color:var(--text-secondary)}
+  .account-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}.account-row:last-child{border-bottom:0}.label{font-size:11px;color:var(--text-muted)}.value{font-size:12px;font-weight:600}
+  @media(max-width:800px){.theme-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.settings-shell{padding:22px 16px 50px}.topbar{align-items:flex-start;gap:12px}.theme-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="settings-shell">
+  <div class="topbar">
+    <div class="brand"><div class="brand-mark"><i class="ti ti-settings"></i></div><div><div class="brand-name">MCM</div><div class="brand-sub" id="roleLabel">Settings</div></div></div>
+    <button class="back" id="backBtn"><i class="ti ti-arrow-left"></i> Back to Dashboard</button>
+  </div>
+
+  <section class="hero">
+    <div class="hero-kicker">MCM / Personalisation</div>
+    <h1>Settings & Appearance</h1>
+    <p>Change your personal MCM colour palette. Your choice belongs to this account only and does not change another student's, faculty member's or administrator's appearance.</p>
+  </section>
+
+  <section class="card">
+    <h2>Appearance</h2>
+    <p>Select the accent colour you prefer for your MCM workspace.</p>
+    <div class="theme-grid" id="themeGrid"></div>
+    <div class="personal-note" style="margin-top:14px"><i class="ti ti-user-check" style="color:var(--accent);font-size:16px"></i><span>This preference is saved separately for your account.</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Account</h2>
+    <p>Your current testing account details.</p>
+    <div class="account-row"><span class="label">Name</span><span class="value" id="name">—</span></div>
+    <div class="account-row"><span class="label">Email</span><span class="value" id="email">—</span></div>
+    <div class="account-row"><span class="label">Role</span><span class="value" id="role">—</span></div>
+  </section>
+</div>
+
+<script src="mcm-theme.js"></script>
+<script>
+(function(){
+  const THEMES = window.MCMTheme?.THEMES || {};
+  const roleNames={student:'Student Platform',teacher:'Faculty Platform',svl:'SVL Portal',admin:'University Admin',superadmin:'Platform Control'};
+  let user=null; try{user=JSON.parse(sessionStorage.getItem('mcm_user')||'null')}catch{}
+  const role=(user?.role||'student');
+  document.getElementById('roleLabel').textContent=roleNames[role]||'Settings';
+  document.getElementById('name').textContent=user?.name||'Testing User';
+  document.getElementById('email').textContent=user?.email||'test@local';
+  document.getElementById('role').textContent=roleNames[role]||role;
+  const grid=document.getElementById('themeGrid');
+  Object.entries(THEMES).forEach(([key,t])=>{
+    const b=document.createElement('button');b.className='theme';b.type='button';b.dataset.theme=key;
+    b.innerHTML=`<span class="swatch" style="--swatch:${t.accent}"></span><strong>${t.label}</strong><small>Personal theme</small>`;
+    b.onclick=()=>{window.MCMTheme.applyTheme(key);refresh()};grid.appendChild(b);
+  });
+  function refresh(){const cur=window.MCMTheme.currentTheme();grid.querySelectorAll('.theme').forEach(b=>b.classList.toggle('active',b.dataset.theme===cur))}
+  refresh();
+  document.getElementById('backBtn').onclick=()=>{
+    const p={student:'student-dashboard.html',teacher:'teacher-dashboard.html',svl:'svl-dashboard.html',admin:'admin-dashboard.html',superadmin:'superadmin-dashboard.html'}[role]||'index.html';
+    location.href=p;
+  };
+})();
+</script>
+</body>
+</html>
