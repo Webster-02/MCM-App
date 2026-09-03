@@ -2,7 +2,7 @@
 // TEST_MODE is temporary for product testing. Set to false before production.
 
 import { auth, db } from "./firebase-config.js";
-import { MCM_ROLES, describeRole, getEntityFlow } from "./mcm-data.js";
+import { describeRole, getEntityFlow } from "./mcm-data.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
@@ -26,8 +26,11 @@ const TEST_USERS = {
 };
 
 function testUserForRoles(allowedRoles = []) {
-  const role = allowedRoles[0] || "student";
-  const base = TEST_USERS[role] || TEST_USERS.student;
+  // IMPORTANT: every dashboard must receive only its own role.
+  // Never fall back to the student user when a page asks for another role.
+  const role = allowedRoles.length === 1 ? allowedRoles[0] : (allowedRoles[0] || "student");
+  const base = TEST_USERS[role];
+  if (!base) throw new Error(`Unknown MCM role: ${role}`);
   return { ...base, role, isActive:true, createdAt:null, permissionsDescription:describeRole(role), entityFlow:getEntityFlow() };
 }
 
@@ -69,8 +72,6 @@ function requireAuth(allowedRoles=[]){
   if(TEST_MODE){
     const u=testUserForRoles(allowedRoles);
     sessionStorage.setItem(USER_SESSION_KEY,JSON.stringify(u));
-    // Theme UI is loaded here so every dashboard gets the same per-account Appearance control,
-    // even when the individual dashboard does not import dashboard-common.js.
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",loadThemeSystem,{once:true});
     else loadThemeSystem();
     return Promise.resolve(u);
