@@ -1,6 +1,6 @@
 # MCM Simple Architecture
 
-MCM should stay simple. **SVL means Student Voice Leader**, similar to a class representative (CR). It is not a teaching subject or learning space.
+MCM must keep each workspace strictly separated. **SVL means Student Voice Leader**, similar to a class representative (CR). It is not a teaching subject or learning space.
 
 ```text
 Super Admin
@@ -20,6 +20,16 @@ Faculty → manages teaching content
 Students → consume learning content
 SVL → manages class student list + class communication
 ```
+
+## Strict workspace rule
+
+Each role has its own dashboard and permissions. A user must never see another role's navigation, controls, or workspace data.
+
+- **Student** → learning and personal academic progress only.
+- **Faculty/Teacher** → teaching and management of assigned classes only.
+- **University Admin** → university/class/user administration and oversight.
+- **SVL** → one class roster and class communication only.
+- **Super Admin** → platform-wide governance.
 
 ## 1. Super Admin
 
@@ -99,28 +109,9 @@ An SVL belongs to **one class only** and receives a small, focused portal.
 - Access another class
 - Access university-wide admin controls
 
-### SVL portal
+## 4. Faculty / Teacher
 
-```text
-MCM
-
-My Class
-Students
-Announcements
-Learning Resources
-Class Updates
-Profile
-```
-
-The most important SVL action is:
-
-`My Class → Students → Add Student`
-
-When an SVL adds a student, the system creates an enrollment for **that SVL's own class only**. The SVL cannot choose another class.
-
-## 4. Faculty
-
-Faculty members manage teaching.
+Faculty members manage teaching for their assigned classes.
 
 ```text
 Faculty
@@ -145,6 +136,8 @@ Faculty can:
 
 Faculty cannot change university-level structure.
 
+**Teacher and Student are separate workspaces.** Teacher controls must never be added to the Student navigation, and Student-only community/progress controls must not be used as Teacher navigation.
+
 ## 5. Student
 
 Students see only their own enrolled classes and learning resources.
@@ -167,6 +160,16 @@ Student features:
 - View grades
 - Track progress
 - Participate in Community
+
+Students do **not** get:
+
+- Upload Slides
+- Quiz Builder
+- Assignment creation
+- Teacher attendance controls
+- Grade entry
+- Teacher analytics
+- Teacher class management
 
 ## Ownership rules
 
@@ -196,25 +199,6 @@ Keep the University Admin navigation simple:
 6. **Announcements**
 7. **Reports**
 8. **Settings**
-
-The Admin should primarily work from the Class page:
-
-```text
-Classes
-  ↓
-Select Class
-  ↓
-┌─────────────────────────────────┐
-│ Class Overview                  │
-│ Students | Faculty | SVL        │
-│                                 │
-│ Learning                        │
-│ Slides | Quizzes | Assignments  │
-│                                 │
-│ Operations                      │
-│ Attendance | Grades | Announce  │
-└─────────────────────────────────┘
-```
 
 ## Recommended class setup
 
