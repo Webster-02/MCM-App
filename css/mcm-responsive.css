@@ -1,28 +1,39 @@
 /* MCM universal responsive override */
-*,*::before,*::after{box-sizing:border-box}html{width:100%;min-width:320px;overflow-x:hidden}body{width:100%;min-width:320px;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}img,video,iframe,table{max-width:100%}button,input,select,textarea{max-width:100%;font-size:16px}button,a{touch-action:manipulation}
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;min-width:320px;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+img,video,iframe,table{max-width:100%}
+button,input,select,textarea{max-width:100%;font-size:16px}
+button,a{touch-action:manipulation}
 @media(max-width:900px){
-  body{margin:0!important;padding-bottom:78px!important}
-  .app,.shell,.layout,.container,.wrapper,.main,.content,.page,.dashboard,.dashboard-container{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important}
-  .main,.content,.page,.dashboard,.dashboard-container{padding-left:12px!important;padding-right:12px!important;padding-bottom:90px!important}
-  .sidebar,.side,.sidenav,.navigation{position:fixed!important;z-index:9999!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%!important;height:74px!important;min-height:74px!important;display:flex!important;flex-direction:row!important;overflow-x:auto!important;padding:5px!important;background:#101216!important;border-top:1px solid rgba(255,255,255,.12)!important}
-  .sidebar nav,.side nav,.sidenav nav,.navigation nav,.side .nav{display:flex!important;flex:1!important;width:100%!important;height:100%!important;gap:4px!important;overflow-x:auto!important}
-  .sidebar a,.sidebar button,.side a,.side button,.sidenav a,.sidenav button,.navigation a,.navigation button,.side .nav button{flex:1 0 72px!important;min-width:72px!important;height:64px!important;min-height:64px!important;padding:6px 3px!important;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;font-size:10px!important;white-space:nowrap!important}
+  body{margin:0!important;padding-bottom:82px!important}
+  .app,.shell,.layout{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important}
+  .main,.content,.page,.dashboard,.dashboard-container{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding-left:12px!important;padding-right:12px!important;padding-bottom:92px!important}
+  .side,.sidebar,.sidenav,.navigation{position:fixed!important;z-index:9999!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%!important;height:76px!important;min-height:76px!important;display:flex!important;flex-direction:row!important;overflow-x:auto!important;padding:5px!important;background:#101216!important;border-top:1px solid rgba(255,255,255,.16)!important}
+  .side .brand,.sidebar .brand{display:none!important}
+  .side .label,.sidebar .label{display:none!important}
+  .side nav,.sidebar nav,.sidenav nav,.navigation nav,.side .nav{display:flex!important;flex:1!important;width:100%!important;height:100%!important;gap:4px!important;overflow-x:auto!important}
+  .side a,.side button,.sidebar a,.sidebar button,.sidenav a,.sidenav button,.navigation a,.navigation button,.side .nav button{flex:1 0 72px!important;min-width:72px!important;height:64px!important;min-height:64px!important;padding:6px 3px!important;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;font-size:10px!important;white-space:nowrap!important}
+  .sideBottom{display:contents!important}
   header,.topbar,.top{width:100%!important;max-width:100%!important;position:sticky!important;top:0!important;z-index:100!important}
   .grid,.cards,.stats,.stat-grid,.class-grid,.classes,.two-column,.columns,.row-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important;min-width:0!important;gap:10px!important}
   .card,.stat,.classCard,.panel,.section,.box,.modalBox{width:100%!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important}
   .hero{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important}
-  .hero h1,.hero h2,.card h2,.card h3,.section h2,.section h3{overflow-wrap:anywhere!important;word-break:break-word!important}
   .table-wrap,.table-container{width:100%!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch}
   table{min-width:560px!important}
   .form,.form-grid,.fields{grid-template-columns:1fr!important;width:100%!important}
-  .field,.form-group{width:100%!important;min-width:0!important}.field input,.field select,.field textarea,.form-group input,.form-group select,.form-group textarea{width:100%!important;min-width:0!important}
-  .actions,.button-row{display:flex!important;flex-wrap:wrap!important;gap:8px!important}.actions>* ,.button-row>*{flex:1 1 130px!important;min-width:0!important}
-  .modal,.overlay{padding:0!important;align-items:flex-end!important}.modalBox,.modal-content,.modal-card{width:100%!important;max-width:100%!important;max-height:90dvh!important;border-radius:18px 18px 0 0!important;overflow:auto!important}
+  .field,.form-group{width:100%!important;min-width:0!important}
+  .field input,.field select,.field textarea,.form-group input,.form-group select,.form-group textarea{width:100%!important;min-width:0!important}
+  .actions,.button-row{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+  .actions>* ,.button-row>*{flex:1 1 130px!important;min-width:0!important}
+  .modal,.overlay{padding:0!important;align-items:flex-end!important}
+  .modalBox,.modal-content,.modal-card{width:100%!important;max-width:100%!important;max-height:90dvh!important;border-radius:18px 18px 0 0!important;overflow:auto!important}
 }
 @media(max-width:560px){
   .main,.content,.page,.dashboard,.dashboard-container{padding-left:9px!important;padding-right:9px!important}
   .grid,.cards,.stats,.stat-grid,.class-grid,.classes,.two-column,.columns,.row-grid{grid-template-columns:1fr!important;gap:9px!important}
-  .top h1,.top h2,.top h3{font-size:15px!important}.hero{padding:16px!important;border-radius:16px!important}.card,.stat,.classCard,.panel,.section,.box{padding:13px!important;border-radius:14px!important}
-  .btn,button{min-height:42px!important}.section-head,.cardHead{display:flex!important;flex-wrap:wrap!important;gap:8px!important}.section-head>* ,.cardHead>*{max-width:100%!important}
+  .top{padding:0 12px!important}.top h1,.top h2,.top h3{font-size:15px!important}
+  .hero{padding:16px!important;border-radius:16px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+  .card,.stat,.classCard,.panel,.section,.box{padding:13px!important;border-radius:14px!important}
+  .btn,button{min-height:42px!important}.section-head,.cardHead{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
 }
-@media(max-width:380px){.main,.content,.page,.dashboard,.dashboard-container{padding-left:7px!important;padding-right:7px!important}.sidebar a,.sidebar button,.side a,.side button,.side .nav button{font-size:9px!important;min-width:64px!important}.hero{padding:13px!important}}
+@media(max-width:380px){.main,.content,.page,.dashboard,.dashboard-container{padding-left:7px!important;padding-right:7px!important}.side a,.side button{font-size:9px!important;min-width:64px!important}.hero{padding:13px!important}}
