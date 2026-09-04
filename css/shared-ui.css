@@ -1,0 +1,63 @@
+/* Shared UI foundation for every MCM page. */
+:root {
+  --content-max-width: 1440px;
+  --focus-ring: 0 0 0 3px rgb(212 175 55 / 25%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body { min-width: 320px; overflow-x: hidden; }
+
+a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+
+:focus-visible {
+  outline: 2px solid var(--accent, #d4af37);
+  outline-offset: 3px;
+  box-shadow: var(--focus-ring);
+}
+
+img, svg, video { max-width: 100%; }
+
+.page-content {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+
+.table-wrap, .data-table-wrap, .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap table, .data-table-wrap table, .table-responsive table {
+  min-width: 620px;
+}
+
+button, .btn, a[role="button"] {
+  touch-action: manipulation;
+}
+
+@media (max-width: 900px) {
+  .page-content { padding-inline: 16px; }
+  .btn, button { min-height: 40px; }
+  .topbar { min-height: 58px; }
+}
+
+@media (max-width: 560px) {
+  .page-content { padding-inline: 12px; }
+  .card, .stat-card, .s-card { padding: 14px; }
+  .btn, button { min-height: 42px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
