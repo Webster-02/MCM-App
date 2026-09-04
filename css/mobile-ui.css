@@ -5,7 +5,7 @@ button,a,input,select,textarea{touch-action:manipulation}
 button{min-height:40px}
 .table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* Student dashboard: premium responsive polish */
+/* Shared dashboard polish */
 .app,.student-dashboard,.student-app{color-scheme:dark}
 .app .side,.student-dashboard .side,.student-app .side{box-shadow:12px 0 32px rgba(0,0,0,.12)}
 .app .top,.student-dashboard .top,.student-app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.12)}
@@ -18,6 +18,13 @@ button{min-height:40px}
 .app .btn:hover,.student-dashboard .btn:hover,.student-app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .app .composer input,.student-dashboard .composer input,.student-app .composer input{min-height:42px}
 
+/* Admin dashboard enhancements */
+.app .classCard{box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.app .classCard:hover{box-shadow:0 14px 32px rgba(0,0,0,.2)}
+.app .field input,.app .field select{min-height:42px}
+.app .row{transition:background .18s ease}
+.app .row:hover{background:rgba(201,166,107,.035)}
+
 @media(max-width:900px){
   .app-layout{display:block}
   .main-content{min-width:0}
@@ -25,6 +32,7 @@ button{min-height:40px}
   .topbar{padding-inline:16px}
   .sidebar{display:none}
   .app .side,.student-dashboard .side,.student-app .side{display:none}
+  .app .classes{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:850px){
   .app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -36,7 +44,7 @@ button{min-height:40px}
   .btn,.button{min-height:42px}
   .card,.panel,.stat-card{border-radius:14px}
   .modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
-  .app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:1fr}
+  .app .grid,.student-dashboard .grid,.student-app .grid,.app .classes{grid-template-columns:1fr}
   .app .hero,.student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}
   .app .hero h1,.student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
   .app .top,.student-dashboard .top,.student-app .top{padding-inline:12px}
