@@ -1,67 +1,50 @@
-/* MCM shared mobile polish */
-:root{--mcm-focus:rgba(201,166,107,.65)}
+/* MCM responsive layer — light design system */
+:root{--mcm-focus:rgba(111,143,191,.45)}
+*,*::before,*::after{box-sizing:border-box}
 :focus-visible{outline:2px solid var(--mcm-focus);outline-offset:3px}
 button,a,input,select,textarea{touch-action:manipulation}
 button{min-height:40px}
 .table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-
-/* Force the shared visual system over legacy inline page styles */
-.app{background:#08090b!important;color:#f5f5f5!important}
-.app .side{background:#0b0c0f!important;border-color:rgba(255,255,255,.08)!important;color:#f5f5f5!important}
-.app .side .brand,.app .side .label{color:#f5f5f5!important}
-.app .side .brand small{color:#858995!important}
+.app,.student-dashboard,.student-app{background:#f6f8fb!important;color:#1f2937!important}
+.app .side,.student-dashboard .side,.student-app .side,.sidebar{background:#fff!important;color:#1f2937!important;border-color:#e7ebf2!important;box-shadow:4px 0 24px rgba(15,23,42,.05)!important}
+.app .main,.student-dashboard .main,.student-app .main,.main-content{background:#f6f8fb!important;color:#1f2937!important}
+.app .top,.student-dashboard .top,.student-app .top,.topbar{background:rgba(255,255,255,.96)!important;color:#1f2937!important;border-color:#e7ebf2!important;box-shadow:0 1px 0 #e7ebf2,0 8px 24px rgba(15,23,42,.035)!important}
+.app .side .brand,.app .side .label{color:#1f2937!important}
+.app .side .brand small{color:#64748b!important}
 .app .side .nav{display:grid!important;visibility:visible!important;opacity:1!important}
-.app .side .nav button{display:flex!important;visibility:visible!important;opacity:1!important;color:#92949e!important;background:transparent!important}
-.app .side .nav button.active,.app .side .nav button:hover{background:rgba(201,166,107,.13)!important;color:#e0c18b!important}
-.app .side .bottom{display:block!important;visibility:visible!important;border-top:1px solid rgba(255,255,255,.08)!important}
-.app .side .danger{color:#d98b8b!important}
-.app .main{background:#08090b!important}
-.app .top{background:rgba(8,9,11,.94)!important;border-color:rgba(255,255,255,.08)!important}
-.app .content{max-width:1280px!important}
-.app .hero{background:linear-gradient(135deg,#17130e,#101216)!important;border-color:rgba(201,166,107,.22)!important}
-.app .card,.app .stat{background:#101216!important;border-color:rgba(255,255,255,.09)!important}
-.app .btn.primary{background:linear-gradient(145deg,#d9ba80,#a4814e)!important;color:#090a0b!important}
-.app .card,.app .stat{box-shadow:0 10px 28px rgba(0,0,0,.18);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.app .card:hover,.app .stat:hover{border-color:rgba(201,166,107,.3)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)}
-.app .side{box-shadow:12px 0 32px rgba(0,0,0,.2)}
-.app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.16)}
-.app .hero{box-shadow:0 18px 45px rgba(0,0,0,.2)}
-.app .btn{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
-.app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.2)}
-.app .classCard{box-shadow:0 8px 24px rgba(0,0,0,.16);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.app .classCard:hover{box-shadow:0 14px 32px rgba(0,0,0,.24)}
-.app .field input,.app .field select{min-height:42px}
-.app .row{transition:background .18s ease}
-.app .row:hover{background:rgba(201,166,107,.045)}
-.app .modal{backdrop-filter:blur(8px)}
-.app .modalBox{box-shadow:0 24px 80px rgba(0,0,0,.5)}
-.app .modalHead{position:sticky;top:0;background:#111318;padding-bottom:12px;z-index:1}
+.app .side .nav button{display:flex!important;visibility:visible!important;opacity:1!important;color:#64748b!important;background:transparent!important}
+.app .side .nav button.active,.app .side .nav button:hover{background:#edf3fb!important;color:#5273a4!important}
+.app .side .bottom,.app .sideBottom{display:block!important;visibility:visible!important;border-color:#e7ebf2!important}
+.app .side .danger{color:#b85f6b!important}
+.app .hero{background:linear-gradient(135deg,#eef4fc,#fff)!important;border-color:#dce7f5!important;color:#1f2937!important}
+.app .card,.app .stat,.card,.stat-card,.s-card{background:#fff!important;color:#1f2937!important;border-color:#e7ebf2!important;box-shadow:0 8px 24px rgba(15,23,42,.06)!important}
+.app input,.app select,.app textarea{background:#fff!important;color:#1f2937!important;border-color:#e7ebf2!important}
+.app .btn.primary,.btn-primary{background:linear-gradient(135deg,#7c9dcc,#a9bfdf)!important;color:#fff!important}
+.app .hint,.app .muted{color:#64748b!important}
 .app .actions{flex-wrap:wrap}
 .app .actions .btn{min-width:110px}
-.app .hint b{color:#d7bc89}
-
 @media(max-width:900px){
-  .app{display:block!important;min-height:100vh!important}
-  .app .side{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;overflow-x:auto!important;white-space:nowrap!important;padding:10px 12px!important;border-right:0!important;border-bottom:1px solid rgba(255,255,255,.08)!important;box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
-  .app .brand{padding:6px 10px!important;margin-right:4px!important;flex:0 0 auto!important}
-  .app .brand small,.app .label{display:none!important}
-  .app .nav{display:flex!important;gap:5px!important;flex:0 0 auto!important}
-  .app .nav button{padding:9px 11px!important;flex:0 0 auto!important}
-  .app .sideBottom{margin:0 0 0 auto!important;border:0!important;padding:0!important;flex:0 0 auto!important}
-  .app .main{min-width:0!important}
-  .app .content{padding:18px 16px!important}
-  .app .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .app .hero{padding:20px!important}
+ .app{display:block!important;min-height:100vh!important}
+ .app .side{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;overflow-x:auto!important;white-space:nowrap!important;padding:10px 12px!important;border-right:0!important;border-bottom:1px solid #e7ebf2!important;box-shadow:0 8px 24px rgba(15,23,42,.05)!important}
+ .app .brand{padding:6px 10px!important;margin-right:4px!important;flex:0 0 auto!important}
+ .app .brand small,.app .label{display:none!important}
+ .app .nav{display:flex!important;gap:5px!important;flex:0 0 auto!important}
+ .app .nav button{padding:9px 11px!important;flex:0 0 auto!important}
+ .app .sideBottom{margin:0 0 0 auto!important;border:0!important;padding:0!important;flex:0 0 auto!important}
+ .app .main{min-width:0!important}
+ .app .content{padding:18px 16px!important}
+ .app .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .app .hero{padding:20px!important}
 }
 @media(max-width:560px){
-  .app .content{padding:14px 12px!important}
-  .app .top{height:58px!important;padding:0 12px!important}
-  .app .grid,.app .classes{grid-template-columns:1fr!important}
-  .app .hero{border-radius:16px!important;padding:18px!important}
-  .app .hero h1{font-size:22px!important;line-height:1.2!important}
-  .app .row{align-items:flex-start!important}
-  .app .pill{white-space:nowrap!important}
-  .app .actions .btn{flex:1!important;min-width:0!important}
-  .app .modalBox{width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;padding:16px!important}
+ .app .content{padding:14px 12px!important}
+ .app .top{height:58px!important;padding:0 12px!important}
+ .app .grid,.app .classes{grid-template-columns:1fr!important}
+ .app .hero{border-radius:16px!important;padding:18px!important}
+ .app .hero h1{font-size:22px!important;line-height:1.2!important}
+ .app .row{align-items:flex-start!important}
+ .app .pill{white-space:nowrap!important}
+ .app .actions .btn{flex:1!important;min-width:0!important}
+ .app .modalBox{width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;padding:16px!important}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.app *{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
