@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCM | Sign in</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body{min-height:100vh;display:grid;place-items:center;padding:24px;background:#0b1118;color:#f5f0e8}
+    .auth-card{width:min(100%,460px);padding:32px;border:1px solid rgba(201,166,107,.3);border-radius:20px;background:#121b25;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .brand{color:#c9a66b;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;font-weight:700}
+    h1{margin:10px 0 8px}.muted{color:#aab4c0;line-height:1.6}
+    label{display:block;margin:20px 0 8px;font-weight:600}select,input{width:100%;padding:13px;border-radius:10px;border:1px solid #354252;background:#0d151e;color:#fff}
+    button{width:100%;margin-top:24px;padding:13px;border:0;border-radius:10px;background:#c9a66b;color:#111;font-weight:800;cursor:pointer}
+    .demo{display:grid;gap:8px;margin-top:18px}.demo button{margin:0;background:#202d3b;color:#f5f0e8}.error{margin-top:14px;color:#ff9b9b;min-height:20px}
+  </style>
+</head>
+<body>
+  <main class="auth-card">
+    <div class="brand">MCM University</div>
+    <h1>Welcome back</h1>
+    <p class="muted">Choose your workspace to continue securely.</p>
+    <form id="loginForm">
+      <label for="role">Workspace</label>
+      <select id="role" required><option value="student">Student</option><option value="admin">University Admin</option><option value="svl">Class Representative</option></select>
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="Enter email" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Enter password" required>
+      <button type="submit">Sign in</button>
+      <div id="error" class="error" role="alert"></div>
+    </form>
+    <div class="demo">
+      <button type="button" data-role="student">Use student demo</button>
+      <button type="button" data-role="admin">Use admin demo</button>
+      <button type="button" data-role="svl">Use SVL demo</button>
+    </div>
+  </main>
+  <script type="module">
+    import { loginUser, redirectForRole, TEST_USERS } from './auth.js';
+    const role = document.querySelector('#role');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const error = document.querySelector('#error');
+    function fill(selected){ role.value=selected; email.value=TEST_USERS[selected].email; password.value='demo-password'; }
+    document.querySelectorAll('[data-role]').forEach(button => button.addEventListener('click', () => fill(button.dataset.role)));
+    fill(new URLSearchParams(location.search).get('role') || 'student');
+    document.querySelector('#loginForm').addEventListener('submit', async event => {
+      event.preventDefault(); error.textContent='';
+      try { const user=await loginUser(email.value,password.value,role.value); redirectForRole(user.role); }
+      catch (err) { error.textContent=err.message || 'Unable to sign in.'; }
+    });
+  </script>
+</body>
+</html>
