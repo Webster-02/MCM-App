@@ -6,17 +6,17 @@ button{min-height:40px}
 .table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
 /* Student dashboard: premium responsive polish */
-.student-dashboard,.student-app{color-scheme:dark}
-.student-dashboard .side,.student-app .side{box-shadow:12px 0 32px rgba(0,0,0,.12)}
-.student-dashboard .top,.student-app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.12)}
-.student-dashboard .hero,.student-app .hero{box-shadow:0 18px 45px rgba(0,0,0,.16)}
-.student-dashboard .card,.student-dashboard .stat,.student-app .card,.student-app .stat{box-shadow:0 10px 28px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.student-dashboard .card:hover,.student-dashboard .stat:hover,.student-app .card:hover,.student-app .stat:hover{border-color:rgba(201,166,107,.25);box-shadow:0 14px 34px rgba(0,0,0,.18)}
-.student-dashboard .nav button,.student-app .nav button{transition:background .2s ease,color .2s ease,transform .2s ease}
-.student-dashboard .nav button:hover,.student-app .nav button:hover{transform:translateX(2px)}
-.student-dashboard .btn,.student-app .btn{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
-.student-dashboard .btn:hover,.student-app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.18)}
-.student-dashboard .composer input,.student-app .composer input{min-height:42px}
+.app,.student-dashboard,.student-app{color-scheme:dark}
+.app .side,.student-dashboard .side,.student-app .side{box-shadow:12px 0 32px rgba(0,0,0,.12)}
+.app .top,.student-dashboard .top,.student-app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.12)}
+.app .hero,.student-dashboard .hero,.student-app .hero{box-shadow:0 18px 45px rgba(0,0,0,.16)}
+.app .card,.app .stat,.student-dashboard .card,.student-dashboard .stat,.student-app .card,.student-app .stat{box-shadow:0 10px 28px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.app .card:hover,.app .stat:hover,.student-dashboard .card:hover,.student-dashboard .stat:hover,.student-app .card:hover,.student-app .stat:hover{border-color:rgba(201,166,107,.25);box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.app .nav button,.student-dashboard .nav button,.student-app .nav button{transition:background .2s ease,color .2s ease,transform .2s ease}
+.app .nav button:hover,.student-dashboard .nav button:hover,.student-app .nav button:hover{transform:translateX(2px)}
+.app .btn,.student-dashboard .btn,.student-app .btn{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+.app .btn:hover,.student-dashboard .btn:hover,.student-app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.app .composer input,.student-dashboard .composer input,.student-app .composer input{min-height:42px}
 
 @media(max-width:900px){
   .app-layout{display:block}
@@ -24,11 +24,11 @@ button{min-height:40px}
   .page-content{padding:18px 16px}
   .topbar{padding-inline:16px}
   .sidebar{display:none}
-  .student-dashboard .side,.student-app .side{display:none}
+  .app .side,.student-dashboard .side,.student-app .side{display:none}
 }
 @media(max-width:850px){
-  .student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .student-dashboard .hero,.student-app .hero{padding:20px}
+  .app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .app .hero,.student-dashboard .hero,.student-app .hero{padding:20px}
 }
 @media(max-width:560px){
   .page-content{padding:14px 12px}
@@ -36,14 +36,14 @@ button{min-height:40px}
   .btn,.button{min-height:42px}
   .card,.panel,.stat-card{border-radius:14px}
   .modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
-  .student-dashboard .grid,.student-app .grid{grid-template-columns:1fr}
-  .student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}
-  .student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
-  .student-dashboard .top,.student-app .top{padding-inline:12px}
-  .student-dashboard .content,.student-app .content{padding:14px 12px}
-  .student-dashboard .row,.student-app .row{align-items:flex-start}
-  .student-dashboard .pill,.student-app .pill{white-space:nowrap}
-  .student-dashboard .composer,.student-app .composer{align-items:stretch}
-  .student-dashboard .composer input,.student-app .composer input{min-width:0}
+  .app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:1fr}
+  .app .hero,.student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}
+  .app .hero h1,.student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
+  .app .top,.student-dashboard .top,.student-app .top{padding-inline:12px}
+  .app .content,.student-dashboard .content,.student-app .content{padding:14px 12px}
+  .app .row,.student-dashboard .row,.student-app .row{align-items:flex-start}
+  .app .pill,.student-dashboard .pill,.student-app .pill{white-space:nowrap}
+  .app .composer,.student-dashboard .composer,.student-app .composer{align-items:stretch}
+  .app .composer input,.student-dashboard .composer input,.student-app .composer input{min-width:0}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.student-dashboard *, .student-app *{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.app *, .student-dashboard *, .student-app *{transition:none!important;animation:none!important}}
