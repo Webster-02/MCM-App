@@ -24,39 +24,30 @@ button{min-height:40px}
 .app .field input,.app .field select{min-height:42px}
 .app .row{transition:background .18s ease}
 .app .row:hover{background:rgba(201,166,107,.035)}
+.app .modal{backdrop-filter:blur(8px)}
+.app .modalBox{box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.app .modalHead{position:sticky;top:0;background:#111318;padding-bottom:12px;z-index:1}
+.app .actions{flex-wrap:wrap}
+.app .actions .btn{min-width:110px}
+.app .hint b{color:#d7bc89}
 
 @media(max-width:900px){
-  .app-layout{display:block}
-  .main-content{min-width:0}
-  .page-content{padding:18px 16px}
-  .topbar{padding-inline:16px}
+  .app-layout{display:block}.main-content{min-width:0}.page-content{padding:18px 16px}.topbar{padding-inline:16px}
   .app{display:block}
   .app .side{display:flex;flex-direction:row;align-items:center;gap:10px;overflow-x:auto;white-space:nowrap;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.16)}
-  .app .brand{padding:6px 10px;margin-right:4px;flex:0 0 auto}
-  .app .brand small,.app .label{display:none}
-  .app .nav{display:flex;gap:5px;flex:0 0 auto}
-  .app .nav button{padding:9px 11px;flex:0 0 auto}
-  .app .sideBottom{margin:0 0 0 auto;border:0;padding:0;flex:0 0 auto}
-  .app .classes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .app .brand{padding:6px 10px;margin-right:4px;flex:0 0 auto}.app .brand small,.app .label{display:none}
+  .app .nav{display:flex;gap:5px;flex:0 0 auto}.app .nav button{padding:9px 11px;flex:0 0 auto}
+  .app .sideBottom{margin:0 0 0 auto;border:0;padding:0;flex:0 0 auto}.app .classes{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:850px){
-  .app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .app .hero,.student-dashboard .hero,.student-app .hero{padding:20px}
-}
+@media(max-width:850px){.app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}.app .hero,.student-dashboard .hero,.student-app .hero{padding:20px}}
 @media(max-width:560px){
-  .page-content{padding:14px 12px}
-  .topbar{min-height:58px;padding-inline:12px}
-  .btn,.button{min-height:42px}
-  .card,.panel,.stat-card{border-radius:14px}
-  .modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
+  .page-content{padding:14px 12px}.topbar{min-height:58px;padding-inline:12px}.btn,.button{min-height:42px}
+  .card,.panel,.stat-card{border-radius:14px}.modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
   .app .grid,.student-dashboard .grid,.student-app .grid,.app .classes{grid-template-columns:1fr}
-  .app .hero,.student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}
-  .app .hero h1,.student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
-  .app .top,.student-dashboard .top,.student-app .top{padding-inline:12px}
-  .app .content,.student-dashboard .content,.student-app .content{padding:14px 12px}
-  .app .row,.student-dashboard .row,.student-app .row{align-items:flex-start}
-  .app .pill,.student-dashboard .pill,.student-app .pill{white-space:nowrap}
-  .app .composer,.student-dashboard .composer,.student-app .composer{align-items:stretch}
-  .app .composer input,.student-dashboard .composer input,.student-app .composer input{min-width:0}
+  .app .hero,.student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}.app .hero h1,.student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
+  .app .top,.student-dashboard .top,.student-app .top{padding-inline:12px}.app .content,.student-dashboard .content,.student-app .content{padding:14px 12px}
+  .app .row,.student-dashboard .row,.student-app .row{align-items:flex-start}.app .pill,.student-dashboard .pill,.student-app .pill{white-space:nowrap}
+  .app .composer,.student-dashboard .composer,.student-app .composer{align-items:stretch}.app .composer input,.student-dashboard .composer input,.student-app .composer input{min-width:0}
+  .app .actions .btn{flex:1;min-width:0}.app .modalBox{padding:16px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.app *, .student-dashboard *, .student-app *{transition:none!important;animation:none!important}}
