@@ -30,8 +30,13 @@ button{min-height:40px}
   .main-content{min-width:0}
   .page-content{padding:18px 16px}
   .topbar{padding-inline:16px}
-  .sidebar{display:none}
-  .app .side,.student-dashboard .side,.student-app .side{display:none}
+  .app{display:block}
+  .app .side{display:flex;flex-direction:row;align-items:center;gap:10px;overflow-x:auto;white-space:nowrap;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.16)}
+  .app .brand{padding:6px 10px;margin-right:4px;flex:0 0 auto}
+  .app .brand small,.app .label{display:none}
+  .app .nav{display:flex;gap:5px;flex:0 0 auto}
+  .app .nav button{padding:9px 11px;flex:0 0 auto}
+  .app .sideBottom{margin:0 0 0 auto;border:0;padding:0;flex:0 0 auto}
   .app .classes{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:850px){
