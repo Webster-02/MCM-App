@@ -24,7 +24,16 @@ async function firebaseProfile(user) { const snapshot = await getDoc(doc(db, 'us
 
 export async function requireAuth(allowedRoles = []) {
   const roles = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
-  if (TEST_MODE) { const role = roles[0]; if (!role || !TEST_USERS[role]) throw new Error('No test role configured for this page.'); return setStoredUser({ ...TEST_USERS[role] }); }
+  if (TEST_MODE) {
+    const stored = getStoredUser();
+    if (stored?.role && roles.length && !roles.includes(stored.role)) {
+      redirectForRole(stored.role);
+      return null;
+    }
+    const role = stored?.role || roles[0];
+    if (!role || !TEST_USERS[role]) throw new Error('No test role configured for this page.');
+    return setStoredUser({ ...TEST_USERS[role] });
+  }
   const firebaseUser = auth.currentUser;
   if (!firebaseUser) { window.location.assign('login.html'); return null; }
   const profile = await firebaseProfile(firebaseUser);
