@@ -61,3 +61,21 @@ export async function resetPassword(email) { if (TEST_MODE) return true; return 
 export async function logoutUser() { return signOut(); }
 export async function signOut() { clearStoredUser(); if (!TEST_MODE && auth.currentUser) await auth.signOut(); window.location.assign('index.html'); }
 export { describeRole, getEntityFlow };
+
+// Load the shared shell only on protected dashboard pages.
+if (typeof window !== 'undefined') {
+  const page = window.location.pathname.split('/').pop();
+  const dashboardRoles = {
+    'student-dashboard.html': 'student',
+    'class-management.html': 'admin',
+    'svl-dashboard.html': 'svl'
+  };
+  const activeRole = dashboardRoles[page];
+  if (activeRole) {
+    const bootShell = () => import('./js/dashboard-shell.js')
+      .then(({ initDashboardShell }) => initDashboardShell({ allowedRoles: [activeRole], activeRole }))
+      .catch((error) => console.warn('Dashboard shell failed to load:', error));
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootShell, { once: true });
+    else bootShell();
+  }
+}
