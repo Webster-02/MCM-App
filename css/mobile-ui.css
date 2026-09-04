@@ -5,49 +5,58 @@ button,a,input,select,textarea{touch-action:manipulation}
 button{min-height:40px}
 .table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* Shared dashboard polish */
-.app,.student-dashboard,.student-app{color-scheme:dark}
-.app .side,.student-dashboard .side,.student-app .side{box-shadow:12px 0 32px rgba(0,0,0,.12)}
-.app .top,.student-dashboard .top,.student-app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.12)}
-.app .hero,.student-dashboard .hero,.student-app .hero{box-shadow:0 18px 45px rgba(0,0,0,.16)}
-.app .card,.app .stat,.student-dashboard .card,.student-dashboard .stat,.student-app .card,.student-app .stat{box-shadow:0 10px 28px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.app .card:hover,.app .stat:hover,.student-dashboard .card:hover,.student-dashboard .stat:hover,.student-app .card:hover,.student-app .stat:hover{border-color:rgba(201,166,107,.25);box-shadow:0 14px 34px rgba(0,0,0,.18)}
-.app .nav button,.student-dashboard .nav button,.student-app .nav button{transition:background .2s ease,color .2s ease,transform .2s ease}
-.app .nav button:hover,.student-dashboard .nav button:hover,.student-app .nav button:hover{transform:translateX(2px)}
-.app .btn,.student-dashboard .btn,.student-app .btn{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
-.app .btn:hover,.student-dashboard .btn:hover,.student-app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.18)}
-.app .composer input,.student-dashboard .composer input,.student-app .composer input{min-height:42px}
-
-/* Admin dashboard enhancements */
-.app .classCard{box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.app .classCard:hover{box-shadow:0 14px 32px rgba(0,0,0,.2)}
+/* Force the shared visual system over legacy inline page styles */
+.app{background:#08090b!important;color:#f5f5f5!important}
+.app .side{background:#0b0c0f!important;border-color:rgba(255,255,255,.08)!important}
+.app .main{background:#08090b!important}
+.app .top{background:rgba(8,9,11,.94)!important;border-color:rgba(255,255,255,.08)!important}
+.app .content{max-width:1280px!important}
+.app .hero{background:linear-gradient(135deg,#17130e,#101216)!important;border-color:rgba(201,166,107,.22)!important}
+.app .card,.app .stat{background:#101216!important;border-color:rgba(255,255,255,.09)!important}
+.app .nav button{color:#92949e!important}
+.app .nav button.active,.app .nav button:hover{background:rgba(201,166,107,.13)!important;color:#e0c18b!important}
+.app .btn.primary{background:linear-gradient(145deg,#d9ba80,#a4814e)!important;color:#090a0b!important}
+.app .card,.app .stat{box-shadow:0 10px 28px rgba(0,0,0,.18);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.app .card:hover,.app .stat:hover{border-color:rgba(201,166,107,.3)!important;box-shadow:0 16px 38px rgba(0,0,0,.24)}
+.app .side{box-shadow:12px 0 32px rgba(0,0,0,.2)}
+.app .top{box-shadow:0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.16)}
+.app .hero{box-shadow:0 18px 45px rgba(0,0,0,.2)}
+.app .btn{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+.app .btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.app .classCard{box-shadow:0 8px 24px rgba(0,0,0,.16);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.app .classCard:hover{box-shadow:0 14px 32px rgba(0,0,0,.24)}
 .app .field input,.app .field select{min-height:42px}
 .app .row{transition:background .18s ease}
-.app .row:hover{background:rgba(201,166,107,.035)}
+.app .row:hover{background:rgba(201,166,107,.045)}
 .app .modal{backdrop-filter:blur(8px)}
-.app .modalBox{box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.app .modalBox{box-shadow:0 24px 80px rgba(0,0,0,.5)}
 .app .modalHead{position:sticky;top:0;background:#111318;padding-bottom:12px;z-index:1}
 .app .actions{flex-wrap:wrap}
 .app .actions .btn{min-width:110px}
 .app .hint b{color:#d7bc89}
 
 @media(max-width:900px){
-  .app-layout{display:block}.main-content{min-width:0}.page-content{padding:18px 16px}.topbar{padding-inline:16px}
-  .app{display:block}
-  .app .side{display:flex;flex-direction:row;align-items:center;gap:10px;overflow-x:auto;white-space:nowrap;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.16)}
-  .app .brand{padding:6px 10px;margin-right:4px;flex:0 0 auto}.app .brand small,.app .label{display:none}
-  .app .nav{display:flex;gap:5px;flex:0 0 auto}.app .nav button{padding:9px 11px;flex:0 0 auto}
-  .app .sideBottom{margin:0 0 0 auto;border:0;padding:0;flex:0 0 auto}.app .classes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .app{display:block!important;min-height:100vh!important}
+  .app .side{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;overflow-x:auto!important;white-space:nowrap!important;padding:10px 12px!important;border-right:0!important;border-bottom:1px solid rgba(255,255,255,.08)!important;box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
+  .app .brand{padding:6px 10px!important;margin-right:4px!important;flex:0 0 auto!important}
+  .app .brand small,.app .label{display:none!important}
+  .app .nav{display:flex!important;gap:5px!important;flex:0 0 auto!important}
+  .app .nav button{padding:9px 11px!important;flex:0 0 auto!important}
+  .app .sideBottom{margin:0 0 0 auto!important;border:0!important;padding:0!important;flex:0 0 auto!important}
+  .app .main{min-width:0!important}
+  .app .content{padding:18px 16px!important}
+  .app .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .app .hero{padding:20px!important}
 }
-@media(max-width:850px){.app .grid,.student-dashboard .grid,.student-app .grid{grid-template-columns:repeat(3,minmax(0,1fr))}.app .hero,.student-dashboard .hero,.student-app .hero{padding:20px}}
 @media(max-width:560px){
-  .page-content{padding:14px 12px}.topbar{min-height:58px;padding-inline:12px}.btn,.button{min-height:42px}
-  .card,.panel,.stat-card{border-radius:14px}.modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
-  .app .grid,.student-dashboard .grid,.student-app .grid,.app .classes{grid-template-columns:1fr}
-  .app .hero,.student-dashboard .hero,.student-app .hero{border-radius:16px;padding:18px}.app .hero h1,.student-dashboard .hero h1,.student-app .hero h1{font-size:22px;line-height:1.2}
-  .app .top,.student-dashboard .top,.student-app .top{padding-inline:12px}.app .content,.student-dashboard .content,.student-app .content{padding:14px 12px}
-  .app .row,.student-dashboard .row,.student-app .row{align-items:flex-start}.app .pill,.student-dashboard .pill,.student-app .pill{white-space:nowrap}
-  .app .composer,.student-dashboard .composer,.student-app .composer{align-items:stretch}.app .composer input,.student-dashboard .composer input,.student-app .composer input{min-width:0}
-  .app .actions .btn{flex:1;min-width:0}.app .modalBox{padding:16px}
+  .app .content{padding:14px 12px!important}
+  .app .top{height:58px!important;padding:0 12px!important}
+  .app .grid,.app .classes{grid-template-columns:1fr!important}
+  .app .hero{border-radius:16px!important;padding:18px!important}
+  .app .hero h1{font-size:22px!important;line-height:1.2!important}
+  .app .row{align-items:flex-start!important}
+  .app .pill{white-space:nowrap!important}
+  .app .actions .btn{flex:1!important;min-width:0!important}
+  .app .modalBox{width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;padding:16px!important}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.app *, .student-dashboard *, .student-app *{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}.app *{transition:none!important;animation:none!important}}
