@@ -1,0 +1,21 @@
+/* MCM shared mobile polish */
+:root{--mcm-focus:rgba(201,166,107,.65)}
+:focus-visible{outline:2px solid var(--mcm-focus);outline-offset:3px}
+button,a,input,select,textarea{touch-action:manipulation}
+button{min-height:40px}
+.table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){
+  .app-layout{display:block}
+  .main-content{min-width:0}
+  .page-content{padding:18px 16px}
+  .topbar{padding-inline:16px}
+  .sidebar{display:none}
+}
+@media (max-width:560px){
+  .page-content{padding:14px 12px}
+  .topbar{min-height:58px;padding-inline:12px}
+  .btn,.button{min-height:42px}
+  .card,.panel,.stat-card{border-radius:14px}
+  .modal-content,.modal-box{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
